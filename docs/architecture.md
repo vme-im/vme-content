@@ -20,6 +20,8 @@
 | 2026-05-19 | **A3-3 取消：采摘水位线不预建状态文件** | resume point 可在采摘运行手册落地时由 archive-rin0chan.json/快照推导（含最大 issue 号）；预建无人读写的状态文件=过早脚手架+漂移风险，与「不堆死代码/按需按比例」一致 |
 | 2026-05-19 | **Phase A 完成并 CI 端到端验证** | 单仓 139 + 冻结归档 139 = 278；磁盘==summary==278（漂移消解）；276 打标（回填 271 缓存命中零额外花费 + 网关实打 5；2 条短文偶发失败、缓存跳过下次自愈）；全量 tagHash/sourceRepo；createData 仅 push 数据不碰 issue。剩 A5（拆旧打标路径）须 Phase B 后做 |
 | 2026-05-19 | **更正：create_data 的 AI_API_BASE_URL/LLM_MODEL 取 `vars.` 非 `secrets.`** | 对齐 issue_moderation 成熟写法。此前误取 `secrets.`（空）→ tagger 回退 api.openai.com、用网关 key 打官方端点失败→标签空。`AI_API_KEY`（`secrets.`，机审在用）本就正确、secret 确实存在 |
+| 2026-05-19 | **Phase B 完成：app 去库，默认读快照（线上验证无回归）** | vme-app `SnapshotProvider implements DataProvider` 读 vme-content raw 快照（summary+月文件），内存建模+5min TTL+故障降级；`getDataProvider` 默认快照，Neon 保留（`DATA_PROVIDER=neon` 可回退、`git revert` 确定性兜底）；不再硬依赖 `DATABASE_URL`。createData 补 `reactionsCount`。线上 vme.im 实测：`/api/items` total=278（=快照，非 Neon 281）、详情(id/issue号)/随机/分页/首页/jokes/leaderboard/status 全 200，与切换前一致。13 条 vitest + 全量 21 测试通过 |
+| 2026-05-19 | **快照源用 raw.githubusercontent，非 R2（修订原 §9 item5）** | createData 跑在 vme-content Actions，R2 上传需该仓 R2 Actions secrets（无权配）。raw 读已在 git 的快照：零新 secret、GitHub 原生、契合免费/抗腐烂，完全达成去库。**R2 上传为 follow-up**：待用户在 vme-content 配 R2 Actions secrets 后再接（属优化，非阻塞） |
 
 > **更正（2026-05-19）**：早期讨论曾称产物落点为「S3」。经核对代码（`src/app/api/image-upload/route.ts` 用 `@aws-sdk/client-s3` 指向 `*.r2.cloudflarestorage.com`，`.env.local.example` 仅有 `R2_*` 凭据），实为 **Cloudflare R2**。架构不变，仅正名并升级成本结论：R2 永久免费额度 + 零 egress，此规模长期实际 $0，且不再有 AWS「12 个月免费额度到期转收费」那条腐烂风险。
 
@@ -96,7 +98,7 @@
 **已决**（见 §0）：点赞依赖 GitHub（A）；快照产物落 Cloudflare R2；tag 用 git 小缓存、不回写 Issue 标签。
 **共识**：DB-less 为默认；tag 入快照；双速架构；真相层 = Issues + git 小 tag 缓存；`DataProvider` 为扩容接缝；读模型 = 无正文索引 + 正文按需。
 
-**待决**：无。**Phase A 已完成并 CI 端到端验证**（见 §0）；下一步 Phase B（去库），A5（拆旧打标路径）随 Phase B 后做。
+**待决**：无。**Phase A、Phase B 均已完成并验证**（见 §0；Phase B 线上 vme.im 实测无回归）。下一步：**A5**（拆旧打标路径：删 `/api/classify`、`ClassifyTrigger`、single-sync `analyzeContent`）+ **Phase C**（退役 sync 的 Neon 写入/`sync_logs`、点赞投影、抗腐烂闸）+ **follow-up**（R2 上传，待 vme-content R2 Actions secrets）。
 
 ## 9. 实施路线图（Phase 2）
 
@@ -109,7 +111,7 @@
 4. 删除：`/api/classify`、`ClassifyTrigger`、single-sync 的 `analyzeContent` 调用、`lib/moderation` 死副本。
 5. **校正快照漂移**：一次性重生成一致快照（修 `data.json` 244 vs `summary` 277、最新停在 2025-05、`zkl2333/vme`→`vme-im/vme-content` 旧名少抓）。
 
-**Phase B — 产物与读模型（去库核心）**
+**Phase B — 产物与读模型（去库核心）** — ✅ **已完成并线上验证（2026-05-19）**：app 经 `SnapshotProvider` 读 raw 快照、不再读 Neon；createData 补 `reactionsCount`（项6）；项5 的 R2 上传改为 raw.githubusercontent（见 §0，R2 为 follow-up）；等价性 vitest + vme.im 实测无回归。
 5. createData 产出「无正文索引 + 正文分片 + summary」，同批原子生成、稳定排序，**上传 Cloudflare R2**（覆盖式、强缓存头；复用现有 R2 账户，建议独立 bucket/前缀）。
 6. createData 富化 `reactions.totalCount`（`fetchIssues` 现未抓，补 GraphQL；`github-fetcher.ts:69` 有现成写法）。
 7. 实现 `SnapshotProvider implements DataProvider`：读 S3 索引建内存 + `Map`，正文按需，summary 直读；`getDataProvider()` 由 `NeonProvider` 切 `SnapshotProvider`，`server-utils.ts` 以上不动。
