@@ -16,7 +16,8 @@
 | 2026-05-19 | **tag 持久化用 git 小缓存文件，不回写 Issue 标签** | 避免 label 泛滥与扩写权；保留 PR 可审标；不污染审核标签命名空间 |
 | 2026-05-19 | **读模型一次到位做「无正文索引 + 正文按需」**（用户确认） | 接缝一次铺好、贴合做大野心；明确不走「单文件服务端缓存」过渡 |
 | 2026-05-19 | **跨仓塌缩为「单仓 + 冻结归档」**：whitescent/rin0chan 一次性冻结，ingest 此后只看 `vme-im/vme-content` | 实测上游 2023-08 起停更（~2.75 年）、已改名、139 条全在本地；放弃 live 跨仓即消除已漂移的第三方依赖，符合少维护/不腐烂；详见 §6、§9 |
-| 2026-05-19 | **上游涓流采摘 = 手动按需，非定时自动** | 实测上游新 issue ~4 条/年且全无标签；定时器为此长期常驻=腐烂面不划算。改为"操作手册"按需跑：零常驻、不会静默失败、人顺手滤垃圾。运行手册待 Phase A/B（水位线小文件 + 单仓管线就位）后撰写 |
+| 2026-05-19 | **上游涓流采摘 = 手动按需，非定时自动** | 实测上游新 issue ~4 条/年且全无标签；定时器为此长期常驻=腐烂面不划算。改为"操作手册"按需跑：零常驻、不会静默失败、人顺手滤垃圾。运行手册待单仓管线就位后撰写 |
+| 2026-05-19 | **A3-3 取消：采摘水位线不预建状态文件** | resume point 可在采摘运行手册落地时由 archive-rin0chan.json/快照推导（含最大 issue 号）；预建无人读写的状态文件=过早脚手架+漂移风险，与「不堆死代码/按需按比例」一致 |
 
 > **更正（2026-05-19）**：早期讨论曾称产物落点为「S3」。经核对代码（`src/app/api/image-upload/route.ts` 用 `@aws-sdk/client-s3` 指向 `*.r2.cloudflarestorage.com`，`.env.local.example` 仅有 `R2_*` 凭据），实为 **Cloudflare R2**。架构不变，仅正名并升级成本结论：R2 永久免费额度 + 零 egress，此规模长期实际 $0，且不再有 AWS「12 个月免费额度到期转收费」那条腐烂风险。
 
@@ -76,7 +77,7 @@
 
 - **tag 必须在快照层产出**（createData，唯一已合并多仓处），统一覆盖所有来源仓库；删除 `/api/classify` + `ClassifyTrigger` + single-sync 打标 + `lib/moderation` 死副本。
 - **跨仓塌缩为「单仓 + 冻结归档」**（2026-05-19 实测据此定）：上游 `whitescent`→已改名 `rin0chan/KFC-Crazy-Thursday` 且 2023-08 后停更；其 139 条 `文案提供` 已全量在本地。决定：**一次性冻结该 139 条为静态归档**（provenance 记当前名 `rin0chan/KFC-Crazy-Thursday`，机审/去重/打标各做一次、永不再抓），**此后 ingest 只看单仓 `vme-im/vme-content`**。`node_id` 仍为键；不再有 live 跨仓合并、跨仓 token/限流、whitescent 绕过审核那条路径。
-- **上游涓流靠「手动采摘」补**（2026-05-19 定）：上游 2023 后仍有 ~4 条/年、全无标签的社区投稿。不做定时自动；改为**按需操作手册**——维护者按需执行：读「水位线之后的新 issue」→ 当作一次 vme.im/submit 跑**本仓机审+去重**→ 通过的在 `vme-content` 建 issue（保留原作者署名 + `sourceRef: rin0chan#NNN`）→ 更新水位线（整数，存 git 小状态文件）。写 issue 用 Actions/本地令牌写**自有仓**、读上游公开 issue 免令牌；上游消失则采摘空转、数据不损（优雅降级）。
+- **上游涓流靠「手动采摘」补**（2026-05-19 定）：上游 2023 后仍有 ~4 条/年、全无标签的社区投稿。不做定时自动；改为**按需操作手册**——维护者按需执行：读「水位线之后的新 issue」→ 当作一次 vme.im/submit 跑**本仓机审+去重**→ 通过的在 `vme-content` 建 issue（保留原作者署名 + `sourceRef: rin0chan#NNN`）→ resume point 由 archive/快照推导（不预建状态文件，见 §0）。写 issue 用 Actions/本地令牌写**自有仓**、读上游公开 issue 免令牌；上游消失则采摘空转、数据不损（优雅降级）。
 - **仓库身份**：单仓塌缩后此项自然消解——唯一 live 源即 `vme-im/vme-content`；冻结归档不参与 live 抓取。仍需修掉现行 `zkl2333/vme` 旧名（重定向兜着、且少抓 105 vs 线上 139）。
 
 ## 7. 抗腐烂工程清单（落地时必须执行）
@@ -100,7 +101,7 @@
 **Phase A — 前置清理（低风险、可独立先行、不依赖去库）**
 1. **ingest 收敛为单仓**：live 源仅 `vme-im/vme-content`；移除多仓配置与 `whitescent`/`zkl2333/vme` 旧名（致命前置：无库后这是唯一数据源）。
 1b. **冻结上游归档**：将本地已有的 139 条 whitescent/rin0chan 内容定格为静态归档（provenance 记 `rin0chan/KFC-Crazy-Thursday`），机审/去重/打标各一次后永不再抓。
-1c. **采摘水位线**：建一个 git 小状态文件记录"已采到的上游最大 issue 号"（首值=冻结时的最大号）；**手动采摘运行手册**待本 Phase 管线就位后单独撰写（非定时 workflow）。
+1c. ~~采摘水位线~~（**取消**，2026-05-19）：不预建状态文件——resume point 在采摘运行手册落地时由 archive-rin0chan.json/快照推导；**手动采摘运行手册**待管线就位后单独撰写（非定时 workflow）。
 2. tag 入快照：createData 跑 `analyzeContent`，写 `tags`+`tagHash` 进产物；按 `tagHash` 缓存（上一版产物即缓存）。
 3. 一次性回填：导出现有 Neon tags 对齐进首版产物（省 LLM 钱、保已积累/人工修正的标签）。
 4. 删除：`/api/classify`、`ClassifyTrigger`、single-sync 的 `analyzeContent` 调用、`lib/moderation` 死副本。
