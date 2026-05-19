@@ -18,6 +18,8 @@
 | 2026-05-19 | **跨仓塌缩为「单仓 + 冻结归档」**：whitescent/rin0chan 一次性冻结，ingest 此后只看 `vme-im/vme-content` | 实测上游 2023-08 起停更（~2.75 年）、已改名、139 条全在本地；放弃 live 跨仓即消除已漂移的第三方依赖，符合少维护/不腐烂；详见 §6、§9 |
 | 2026-05-19 | **上游涓流采摘 = 手动按需，非定时自动** | 实测上游新 issue ~4 条/年且全无标签；定时器为此长期常驻=腐烂面不划算。改为"操作手册"按需跑：零常驻、不会静默失败、人顺手滤垃圾。运行手册待单仓管线就位后撰写 |
 | 2026-05-19 | **A3-3 取消：采摘水位线不预建状态文件** | resume point 可在采摘运行手册落地时由 archive-rin0chan.json/快照推导（含最大 issue 号）；预建无人读写的状态文件=过早脚手架+漂移风险，与「不堆死代码/按需按比例」一致 |
+| 2026-05-19 | **Phase A 完成并 CI 端到端验证** | 单仓 139 + 冻结归档 139 = 278；磁盘==summary==278（漂移消解）；276 打标（回填 271 缓存命中零额外花费 + 网关实打 5；2 条短文偶发失败、缓存跳过下次自愈）；全量 tagHash/sourceRepo；createData 仅 push 数据不碰 issue。剩 A5（拆旧打标路径）须 Phase B 后做 |
+| 2026-05-19 | **更正：create_data 的 AI_API_BASE_URL/LLM_MODEL 取 `vars.` 非 `secrets.`** | 对齐 issue_moderation 成熟写法。此前误取 `secrets.`（空）→ tagger 回退 api.openai.com、用网关 key 打官方端点失败→标签空。`AI_API_KEY`（`secrets.`，机审在用）本就正确、secret 确实存在 |
 
 > **更正（2026-05-19）**：早期讨论曾称产物落点为「S3」。经核对代码（`src/app/api/image-upload/route.ts` 用 `@aws-sdk/client-s3` 指向 `*.r2.cloudflarestorage.com`，`.env.local.example` 仅有 `R2_*` 凭据），实为 **Cloudflare R2**。架构不变，仅正名并升级成本结论：R2 永久免费额度 + 零 egress，此规模长期实际 $0，且不再有 AWS「12 个月免费额度到期转收费」那条腐烂风险。
 
@@ -94,11 +96,11 @@
 **已决**（见 §0）：点赞依赖 GitHub（A）；快照产物落 Cloudflare R2；tag 用 git 小缓存、不回写 Issue 标签。
 **共识**：DB-less 为默认；tag 入快照；双速架构；真相层 = Issues + git 小 tag 缓存；`DataProvider` 为扩容接缝；读模型 = 无正文索引 + 正文按需。
 
-**待决**：无。全部关键决策已定，方案完整，进入 review / 实施。
+**待决**：无。**Phase A 已完成并 CI 端到端验证**（见 §0）；下一步 Phase B（去库），A5（拆旧打标路径）随 Phase B 后做。
 
 ## 9. 实施路线图（Phase 2）
 
-**Phase A — 前置清理（低风险、可独立先行、不依赖去库）**
+**Phase A — 前置清理（低风险、可独立先行、不依赖去库）** — ✅ **已完成并 CI 端到端验证（2026-05-19）**：1 / 1b / 2 / 3 / 5 完成，1c 取消，4（=A5 拆旧打标路径）推迟到 Phase B 后（现删会回归 app 读 Neon）。
 1. **ingest 收敛为单仓**：live 源仅 `vme-im/vme-content`；移除多仓配置与 `whitescent`/`zkl2333/vme` 旧名（致命前置：无库后这是唯一数据源）。
 1b. **冻结上游归档**：将本地已有的 139 条 whitescent/rin0chan 内容定格为静态归档（provenance 记 `rin0chan/KFC-Crazy-Thursday`），机审/去重/打标各一次后永不再抓。
 1c. ~~采摘水位线~~（**取消**，2026-05-19）：不预建状态文件——resume point 在采摘运行手册落地时由 archive-rin0chan.json/快照推导；**手动采摘运行手册**待管线就位后单独撰写（非定时 workflow）。
