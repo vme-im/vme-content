@@ -18,3 +18,6 @@ jobs:
           node ./dist/createData.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_API_BASE_URL: ${{ secrets.AI_API_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
