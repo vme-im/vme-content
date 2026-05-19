@@ -97,6 +97,7 @@ describe('moderateIssue', () => {
       url: 'https://github.com/owner/repo/issues/2',
       createdAt: '2021-01-01T00:00:00Z',
       updatedAt: '2021-01-01T00:00:00Z',
+      reactionsCount: 0,
       author: {
         username: 'test-user',
         avatarUrl: 'https://github.com/test-user.png',

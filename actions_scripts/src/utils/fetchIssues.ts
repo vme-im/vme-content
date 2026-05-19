@@ -7,6 +7,7 @@ export interface IssueNode {
   body: string
   createdAt: string
   updatedAt: string
+  reactionsCount: number
   imageHashes?: string[]  // 图片感知哈希缓存
   author: {
     username: string
@@ -53,6 +54,9 @@ export async function fetchIssues(
               avatarUrl
               url
             }
+            reactions(first: 0) {
+              totalCount
+            }
           }
           cursor
         }
@@ -75,7 +79,12 @@ export async function fetchIssues(
     query,
     variables,
   )
-  const issues = data.repository.issues.edges.map((edge) => edge.node)
+  const issues = data.repository.issues.edges.map((edge) => {
+    const { reactions, ...rest } = edge.node as IssueNode & {
+      reactions?: { totalCount: number }
+    }
+    return { ...rest, reactionsCount: reactions?.totalCount ?? 0 }
+  })
   const pageInfo = data.repository.issues.pageInfo
 
   if (pageInfo.hasNextPage && pageInfo.endCursor) {

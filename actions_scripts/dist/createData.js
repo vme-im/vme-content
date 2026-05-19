@@ -46,6 +46,9 @@ async function fetchIssues(owner, name, labels, afterCursor = null) {
               avatarUrl
               url
             }
+            reactions(first: 0) {
+              totalCount
+            }
           }
           cursor
         }
@@ -63,7 +66,11 @@ async function fetchIssues(owner, name, labels, afterCursor = null) {
         afterCursor,
     };
     const data = await octokit.graphql(query, variables);
-    const issues = data.repository.issues.edges.map((edge) => edge.node);
+    const issues = data.repository.issues.edges.map((edge) => {
+        var _a;
+        const { reactions, ...rest } = edge.node;
+        return { ...rest, reactionsCount: (_a = reactions === null || reactions === void 0 ? void 0 : reactions.totalCount) !== null && _a !== void 0 ? _a : 0 };
+    });
     const pageInfo = data.repository.issues.pageInfo;
     if (pageInfo.hasNextPage && pageInfo.endCursor) {
         return issues.concat(await fetchIssues(owner, name, labels, pageInfo.endCursor));
@@ -361,7 +368,7 @@ async function createData() {
         : [];
     const data = [
         ...liveItems.map((it) => ({ ...it, sourceRepo: 'vme-im/vme-content' })),
-        ...archived,
+        ...archived.map((it) => ({ reactionsCount: 0, ...it })),
     ];
     console.log(`获取到 ${liveItems.length} 条（live）+ ${archived.length} 条（冻结归档）= ${data.length}`);
     // 打标：命中缓存跳过 LLM；失败/无 key 回退空标签，不阻塞

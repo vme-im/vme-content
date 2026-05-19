@@ -66,7 +66,7 @@ async function createData() {
 
   const data: any[] = [
     ...liveItems.map((it) => ({ ...it, sourceRepo: 'vme-im/vme-content' })),
-    ...archived,
+    ...archived.map((it: any) => ({ reactionsCount: 0, ...it })),
   ]
 
   console.log(
