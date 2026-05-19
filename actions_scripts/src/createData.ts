@@ -10,6 +10,13 @@ const __filename = fileURLToPath(import.meta.url)
 // 获取当前文件所在的目录
 const __dirname = path.dirname(__filename)
 
+// 单一数据源配置（A1：集中并规范化仓库身份，替代散落的硬编码旧名）
+// 注：rin0chan/KFC-Crazy-Thursday（原 whitescent）已停更；A3 冻结其历史为静态归档后将从此处移除
+const SOURCE_REPOS: { owner: string; repo: string; labels: string[] }[] = [
+  { owner: 'vme-im', repo: 'vme-content', labels: ['收录'] },
+  { owner: 'rin0chan', repo: 'KFC-Crazy-Thursday', labels: ['文案提供'] },
+]
+
 async function createData() {
   console.log('开始创建数据')
 
@@ -17,12 +24,13 @@ async function createData() {
     throw new Error('GITHUB_TOKEN 必须存在')
   }
 
-  const data = [
-    ...(await fetchIssues('zkl2333', 'vme', ['收录'])),
-    ...(await fetchIssues('whitescent', 'KFC-Crazy-Thursday', ['文案提供'])),
-  ]
+  const data = (
+    await Promise.all(
+      SOURCE_REPOS.map(({ owner, repo, labels }) => fetchIssues(owner, repo, labels)),
+    )
+  ).flat()
 
-  console.log(`获取到 ${Object.keys(data).length} 条数据`)
+  console.log(`获取到 ${data.length} 条数据`)
 
   // 按月份分组数据（使用中国时间 UTC+8）
   const dataByMonth: Record<string, any[]> = {}
