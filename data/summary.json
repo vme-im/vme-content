@@ -1,10 +1,10 @@
 {
-  "totalItems": 276,
-  "totalContributors": 36,
+  "totalItems": 277,
+  "totalContributors": 37,
   "months": [
     {
       "month": "2026-04",
-      "count": 1
+      "count": 2
     },
     {
       "month": "2026-03",
@@ -161,10 +161,10 @@
       "url": "https://github.com/SleepyAsh0191"
     },
     {
-      "username": "whitescent",
+      "username": "rin0chan",
       "count": 26,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/31311826?u=a235d75fd9a878d391bc367f899e92cf6c99c670&v=4",
-      "url": "https://github.com/whitescent"
+      "avatarUrl": "https://avatars.githubusercontent.com/u/31311826?u=3dbd7ce1d11bb6968174b5c818288035aee6acbe&v=4",
+      "url": "https://github.com/rin0chan"
     },
     {
       "username": "Kahen",
@@ -229,7 +229,7 @@
     {
       "username": "minoism",
       "count": 3,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/58068445?u=fdab295b6e393842450f9e07fa761ee2b7d1dd7f&v=4",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/58068445?u=f9977510d8462f5b9ebaf253df31c37fde74f182&v=4",
       "url": "https://github.com/minoism"
     },
     {
@@ -281,16 +281,22 @@
       "url": "https://github.com/Acvixl"
     },
     {
-      "username": "W1ndys",
+      "username": "w1ndys",
       "count": 1,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/109416673?u=5d7094871b40502e8d5d4a39c99a8036260bfa5c&v=4",
-      "url": "https://github.com/W1ndys"
+      "avatarUrl": "https://avatars.githubusercontent.com/u/109416673?u=3f3640f059ac32aa8533c44b8446dd054863c4f1&v=4",
+      "url": "https://github.com/w1ndys"
     },
     {
       "username": "gujiaxuan",
       "count": 1,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/75152000?v=4",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/75152000?u=b908b5503fd3738222d8c97f04e7df645becae53&v=4",
       "url": "https://github.com/gujiaxuan"
+    },
+    {
+      "username": "YoinSama",
+      "count": 1,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/87885299?v=4",
+      "url": "https://github.com/YoinSama"
     },
     {
       "username": "Zero-Yu-Jie",
@@ -361,7 +367,7 @@
     {
       "username": "XiZu233",
       "count": 1,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/113348575?u=db27bc4a10d8fe67e6b26c25e03d9f66cbbabd1e&v=4",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/113348575?u=bdaaff178225f5885f0e1174f5dd176aa6281199&v=4",
       "url": "https://github.com/XiZu233"
     }
   ],
@@ -379,10 +385,10 @@
       "url": "https://github.com/SleepyAsh0191"
     },
     {
-      "username": "whitescent",
+      "username": "rin0chan",
       "count": 26,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/31311826?u=a235d75fd9a878d391bc367f899e92cf6c99c670&v=4",
-      "url": "https://github.com/whitescent"
+      "avatarUrl": "https://avatars.githubusercontent.com/u/31311826?u=3dbd7ce1d11bb6968174b5c818288035aee6acbe&v=4",
+      "url": "https://github.com/rin0chan"
     },
     {
       "username": "Kahen",
@@ -427,5 +433,5 @@
       "url": "https://github.com/yutian-9264"
     }
   ],
-  "updatedAt": "2026-04-02T04:04:45.323Z"
+  "updatedAt": "2026-05-19T06:41:15.979Z"
 }
