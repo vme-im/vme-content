@@ -1,4 +1,5 @@
 import { fetchIssues } from "./utils/fetchIssues";
+import { tagContent } from './tagger'
 import core from "@actions/core";
 import fs from "fs";
 import path from "path";
@@ -10,11 +11,11 @@ const __filename = fileURLToPath(import.meta.url)
 // 获取当前文件所在的目录
 const __dirname = path.dirname(__filename)
 
-// 单一数据源配置（A1：集中并规范化仓库身份，替代散落的硬编码旧名）
-// 注：rin0chan/KFC-Crazy-Thursday（原 whitescent）已停更；A3 冻结其历史为静态归档后将从此处移除
+// 单一数据源配置：live 只抓自有仓 vme-im/vme-content（A1+A3 收敛单仓）。
+// rin0chan/KFC-Crazy-Thursday（原 whitescent）已停更，其 139 条历史冻结于
+// data/archive-rin0chan.json，由下方合并、不再 live 抓取（见 docs/architecture.md A3）。
 const SOURCE_REPOS: { owner: string; repo: string; labels: string[] }[] = [
   { owner: 'vme-im', repo: 'vme-content', labels: ['收录'] },
-  { owner: 'rin0chan', repo: 'KFC-Crazy-Thursday', labels: ['文案提供'] },
 ]
 
 async function createData() {
@@ -24,13 +25,64 @@ async function createData() {
     throw new Error('GITHUB_TOKEN 必须存在')
   }
 
-  const data = (
+  const liveItems = (
     await Promise.all(
       SOURCE_REPOS.map(({ owner, repo, labels }) => fetchIssues(owner, repo, labels)),
     )
   ).flat()
 
-  console.log(`获取到 ${data.length} 条数据`)
+  const dataDir = path.join(__dirname, '..', '..', 'data')
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true })
+    console.log(`创建目录: ${dataDir}`)
+  }
+
+  // 整体覆盖前，先从现有按月文件收集 tag 缓存（id -> {tagHash, tags}），避免丢标
+  const tagCache = new Map<string, { tagHash: string; tags: string[] }>()
+  for (const f of fs.readdirSync(dataDir)) {
+    if (!/^\d{4}-\d{2}\.json$/.test(f)) continue
+    const prev = JSON.parse(fs.readFileSync(path.join(dataDir, f), 'utf8'))
+    for (const it of prev) {
+      if (
+        it &&
+        typeof it.id === 'string' &&
+        typeof it.tagHash === 'string' &&
+        Array.isArray(it.tags)
+      ) {
+        tagCache.set(it.id, { tagHash: it.tagHash, tags: it.tags })
+      }
+    }
+  }
+
+  // 合并冻结归档（rin0chan 139 条，不再 live 抓取）
+  const archivePath = path.join(dataDir, 'archive-rin0chan.json')
+  const archived: any[] = fs.existsSync(archivePath)
+    ? JSON.parse(fs.readFileSync(archivePath, 'utf8'))
+    : []
+
+  const data: any[] = [
+    ...liveItems.map((it) => ({ ...it, sourceRepo: 'vme-im/vme-content' })),
+    ...archived,
+  ]
+
+  console.log(
+    `获取到 ${liveItems.length} 条（live）+ ${archived.length} 条（冻结归档）= ${data.length}`,
+  )
+
+  // 打标：命中缓存跳过 LLM；失败/无 key 回退空标签，不阻塞
+  let reTagged = 0
+  let cacheHit = 0
+  for (const item of data) {
+    const r = await tagContent(
+      { title: item.title || '', body: item.body || '' },
+      tagCache.get(item.id),
+    )
+    item.tags = r.tags
+    item.tagHash = r.tagHash
+    if (r.hitCache) cacheHit++
+    else reTagged++
+  }
+  console.log(`打标完成：缓存命中 ${cacheHit}，重算 ${reTagged}`)
 
   // 按月份分组数据（使用中国时间 UTC+8）
   const dataByMonth: Record<string, any[]> = {}
@@ -45,13 +97,6 @@ async function createData() {
     }
     dataByMonth[month].push(item)
   })
-
-  // 确保data目录存在
-  const dataDir = path.join(__dirname, '..', '..', 'data')
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true })
-    console.log(`创建目录: ${dataDir}`)
-  }
 
   // 记录更改的文件
   const changedFiles: string[] = []
