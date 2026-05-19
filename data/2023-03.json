@@ -10,7 +10,12 @@
       "username": "billcoco",
       "avatarUrl": "https://avatars.githubusercontent.com/u/10266447?v=4",
       "url": "https://github.com/billcoco"
-    }
+    },
+    "tags": [
+      "清单",
+      "职场",
+      "卑微"
+    ]
   },
   {
     "id": "I_kwDOHp_P8c5g8Zgo",
@@ -23,7 +28,12 @@
       "username": "SleepyAsh0191",
       "avatarUrl": "https://avatars.githubusercontent.com/u/64446140?u=1f00c389b0b177c5a659ccb91eca9a9d8dea1345&v=4",
       "url": "https://github.com/SleepyAsh0191"
-    }
+    },
+    "tags": [
+      "清单",
+      "恋爱",
+      "性技法"
+    ]
   },
   {
     "id": "I_kwDOHp_P8c5g_mok",
@@ -36,6 +46,9 @@
       "username": "xueelf",
       "avatarUrl": "https://avatars.githubusercontent.com/u/37479458?u=d3e7c8e068c8e5e06ed19ad8c429991cedd46e65&v=4",
       "url": "https://github.com/xueelf"
-    }
+    },
+    "tags": [
+      "职位招聘"
+    ]
   }
 ]

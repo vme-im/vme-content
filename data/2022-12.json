@@ -10,7 +10,11 @@
       "username": "SleepyAsh0191",
       "avatarUrl": "https://avatars.githubusercontent.com/u/64446140?u=1f00c389b0b177c5a659ccb91eca9a9d8dea1345&v=4",
       "url": "https://github.com/SleepyAsh0191"
-    }
+    },
+    "tags": [
+      "考试",
+      "古风"
+    ]
   },
   {
     "id": "I_kwDOHp_P8c5ZRMK3",
@@ -23,7 +27,12 @@
       "username": "billcoco",
       "avatarUrl": "https://avatars.githubusercontent.com/u/10266447?v=4",
       "url": "https://github.com/billcoco"
-    }
+    },
+    "tags": [
+      "荒诞",
+      "古风",
+      "对话"
+    ]
   },
   {
     "id": "I_kwDOHp_P8c5ZyGIO",
@@ -36,7 +45,13 @@
       "username": "SleepyAsh0191",
       "avatarUrl": "https://avatars.githubusercontent.com/u/64446140?u=1f00c389b0b177c5a659ccb91eca9a9d8dea1345&v=4",
       "url": "https://github.com/SleepyAsh0191"
-    }
+    },
+    "tags": [
+      "自嘲",
+      "无厘头",
+      "反讽",
+      "外卖"
+    ]
   },
   {
     "id": "I_kwDOHp_P8c5aMwlg",
@@ -49,6 +64,11 @@
       "username": "billcoco",
       "avatarUrl": "https://avatars.githubusercontent.com/u/10266447?v=4",
       "url": "https://github.com/billcoco"
-    }
+    },
+    "tags": [
+      "心酸",
+      "独白",
+      "天气"
+    ]
   }
 ]

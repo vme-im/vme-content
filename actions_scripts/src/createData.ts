@@ -1,5 +1,5 @@
 import { fetchIssues } from "./utils/fetchIssues";
-import { tagContent } from './tagger'
+import { tagContent, computeTagHash } from './tagger'
 import core from "@actions/core";
 import fs from "fs";
 import path from "path";
@@ -43,13 +43,17 @@ async function createData() {
     if (!/^\d{4}-\d{2}\.json$/.test(f)) continue
     const prev = JSON.parse(fs.readFileSync(path.join(dataDir, f), 'utf8'))
     for (const it of prev) {
-      if (
-        it &&
-        typeof it.id === 'string' &&
-        typeof it.tagHash === 'string' &&
-        Array.isArray(it.tags)
-      ) {
+      if (!it || typeof it.id !== 'string' || !Array.isArray(it.tags) || it.tags.length === 0) {
+        continue
+      }
+      if (typeof it.tagHash === 'string' && it.tagHash) {
         tagCache.set(it.id, { tagHash: it.tagHash, tags: it.tags })
+      } else {
+        // 回填的 tag 无 tagHash：用规范算法现算，使首跑即缓存命中、不调 LLM、不覆盖已有标签
+        tagCache.set(it.id, {
+          tagHash: computeTagHash(it.title || '', it.body || ''),
+          tags: it.tags,
+        })
       }
     }
   }
