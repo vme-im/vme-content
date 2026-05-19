@@ -11,10 +11,12 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "群聊",
       "辞职"
-    ]
+    ],
+    "tagHash": "d7274d80b95f614652eb9a8a9d2d9662148c0c12e8603ebc58a4e047ee940842"
   },
   {
     "id": "I_kwDOLrzjj87WOKcv",
@@ -28,10 +30,12 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "名人冒充",
       "明星"
-    ]
+    ],
+    "tagHash": "a1b1ecb385bd8db3e59016bd141bd56ece0ccb3e8470209c723f6806d8756076"
   },
   {
     "id": "I_kwDOLrzjj87ZWa_v",
@@ -45,9 +49,11 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "元评论"
-    ]
+    ],
+    "tagHash": "4a7f8bae32dbcdff00c2dfc786d37d02af2a154dbf125e7eeee6e929b50e5fd3"
   },
   {
     "id": "I_kwDOLrzjj87au_n5",
@@ -61,8 +67,10 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "元评论"
-    ]
+    ],
+    "tagHash": "904f4bd2b7bf3de06ffe596a0ab2734482563547ac96611096ffa5c875c02478"
   }
 ]

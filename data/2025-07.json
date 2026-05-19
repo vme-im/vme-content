@@ -11,9 +11,11 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "声明回应"
-    ]
+    ],
+    "tagHash": "2a00984510228101a622b5825465aa3a2a879dec6410e61d994c3f8e7dd265e3"
   },
   {
     "id": "I_kwDOLrzjj87COCqb",
@@ -27,12 +29,14 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "职场",
       "惊讶",
       "无厘头",
       "故事"
-    ]
+    ],
+    "tagHash": "6b3721218a02c27f611b8269a5dd2f96bb670d7cc25e85897551f0db92260a5f"
   },
   {
     "id": "I_kwDOLrzjj87CySUM",
@@ -46,10 +50,12 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "职位招聘",
       "宗教"
-    ]
+    ],
+    "tagHash": "27c326758ba8f444dca01c357ed68a2d1a0a53ef14f3f87ed77f34fcd4b108e1"
   },
   {
     "id": "I_kwDOLrzjj87CydPB",
@@ -63,13 +69,15 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "讽刺",
       "反转",
       "独白",
       "八卦",
       "社交"
-    ]
+    ],
+    "tagHash": "06b98568289e3840d09ed1ebf60d720ba182e151b8a850af903c29694ff47973"
   },
   {
     "id": "I_kwDOLrzjj87DdYDV",
@@ -83,13 +91,15 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/127743977?v=4",
       "url": "https://github.com/LarmesDelaLune"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "无厘头",
       "反转",
       "工资",
       "社畜",
       "清单"
-    ]
+    ],
+    "tagHash": "81a8a4460d1ccd0f206f4e525615dd48df702a97099eb280fa4ff2193ac2ad9d"
   },
   {
     "id": "I_kwDOLrzjj87DdYk5",
@@ -103,9 +113,11 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/127743977?v=4",
       "url": "https://github.com/LarmesDelaLune"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "病症编造",
       "医学术语"
-    ]
+    ],
+    "tagHash": "bb2ad02c8c1eedfcd409deca0b007170b1576afc7395e52c714ec8f1a73a59e2"
   }
 ]

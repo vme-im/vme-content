@@ -11,10 +11,12 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/26200808?u=107271e7aff7fb1014ab4a1c0e79b3ef82cea384&v=4",
       "url": "https://github.com/KiritaniAyaka"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "排比",
       "群聊"
-    ]
+    ],
+    "tagHash": "b09473bfa277be6e6d2d08f21c0da7ffe8a0b30ac8d9bd8ad5481b4d318adbd7"
   },
   {
     "id": "I_kwDOLrzjj87UPA9L",
@@ -28,11 +30,13 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "社交",
       "无厘头",
       "反问"
-    ]
+    ],
+    "tagHash": "ffcf1d79d4dcdc39a56d9692cc1948d5dea9f39c220ced8268b04062c48bcab0"
   },
   {
     "id": "I_kwDOLrzjj87UdqRi",
@@ -46,9 +50,11 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "声明回应"
-    ]
+    ],
+    "tagHash": "292ead5eb87ff8c9735c4b32959f759bbfa75b0a57d17dd737d397a43d8958ac"
   },
   {
     "id": "I_kwDOLrzjj87UdrIo",
@@ -62,10 +68,12 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/18900961?u=da4ad19a3d0cd8a9d03c233b1120779f963494a5&v=4",
       "url": "https://github.com/zkl2333"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "情感煽情",
       "恋爱"
-    ]
+    ],
+    "tagHash": "c3863c02db48d9ee897b1b930b2f3ceb06ef859af188e34313cf5e595a91d11e"
   },
   {
     "id": "I_kwDOLrzjj87UvClC",
@@ -79,8 +87,10 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/75152000?u=b908b5503fd3738222d8c97f04e7df645becae53&v=4",
       "url": "https://github.com/gujiaxuan"
     },
+    "sourceRepo": "vme-im/vme-content",
     "tags": [
       "v5重复"
-    ]
+    ],
+    "tagHash": "b092034f20700d952b4e64aa25c64d87c8586b1c43fd6e3db04548bbf11c3d9a"
   }
 ]

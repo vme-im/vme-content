@@ -11,11 +11,13 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/10266447?v=4",
       "url": "https://github.com/billcoco"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "清单",
       "职场",
       "卑微"
-    ]
+    ],
+    "tagHash": "cde1a7ad3784264914b20d2dc2e022133f5574c3de00be403de631716af2daa9"
   },
   {
     "id": "I_kwDOHp_P8c5g8Zgo",
@@ -29,11 +31,13 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/64446140?u=1f00c389b0b177c5a659ccb91eca9a9d8dea1345&v=4",
       "url": "https://github.com/SleepyAsh0191"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "清单",
       "恋爱",
       "性技法"
-    ]
+    ],
+    "tagHash": "940f3c6c987f1ac13552d71e1bbaa038b290e9a35302306eea3e6a4cdac807eb"
   },
   {
     "id": "I_kwDOHp_P8c5g_mok",
@@ -47,8 +51,10 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/37479458?u=d3e7c8e068c8e5e06ed19ad8c429991cedd46e65&v=4",
       "url": "https://github.com/xueelf"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "职位招聘"
-    ]
+    ],
+    "tagHash": "ddde6c4f54643ec379f5fad762b031d0c7b99addb8ccc95b1fe43cec8dbf66c0"
   }
 ]

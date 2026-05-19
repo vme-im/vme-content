@@ -11,11 +11,13 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/49442853?u=8faed13804c4fcb3e5c0fa6b9972cd5c1e8c3cd1&v=4",
       "url": "https://github.com/4O4NtFd"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "点餐系统漏洞",
       "高风险漏洞",
       "漏洞披露"
-    ]
+    ],
+    "tagHash": "81499eefe35bd0a9bca26f0da0080dfd90ec7783a3fc7b35fe54e9d5225411ff"
   },
   {
     "id": "I_kwDOHp_P8c5PJsj2",
@@ -29,13 +31,15 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/49442853?u=8faed13804c4fcb3e5c0fa6b9972cd5c1e8c3cd1&v=4",
       "url": "https://github.com/4O4NtFd"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "反转",
       "无厘头",
       "黑色幽默",
       "亚文化",
       "独白"
-    ]
+    ],
+    "tagHash": "2a54e3712ef7cef2e86a9fc3f02c78fe49fac12b74cb3202bdaf219639c9215f"
   },
   {
     "id": "I_kwDOHp_P8c5PJsmH",
@@ -49,11 +53,13 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/49442853?u=8faed13804c4fcb3e5c0fa6b9972cd5c1e8c3cd1&v=4",
       "url": "https://github.com/4O4NtFd"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "讽刺",
       "模仿",
       "单身"
-    ]
+    ],
+    "tagHash": "53794a530296ddc99c6b02f04165258e75f48a1f90c79e3dce7a739597969c83"
   },
   {
     "id": "I_kwDOHp_P8c5PXhBg",
@@ -67,10 +73,12 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/49442853?u=8faed13804c4fcb3e5c0fa6b9972cd5c1e8c3cd1&v=4",
       "url": "https://github.com/4O4NtFd"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "爽文重生",
       "二次元"
-    ]
+    ],
+    "tagHash": "f8c0e58693c70bd20f4da6dbb62377a7336d7144ce984ed3ffef6705316e049c"
   },
   {
     "id": "I_kwDOHp_P8c5PmGA2",
@@ -84,12 +92,14 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/22192098?u=176a92b26f28f118b7e056a67c828729562f1e5e&v=4",
       "url": "https://github.com/zccl"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "暴躁",
       "无厘头",
       "家庭",
       "对话"
-    ]
+    ],
+    "tagHash": "4a4660b18ace4b4163b96c6cc651fcc6180b2f1bc369400e6b0463f06338b48e"
   },
   {
     "id": "I_kwDOHp_P8c5PnL1p",
@@ -103,13 +113,15 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/58068445?u=f9977510d8462f5b9ebaf253df31c37fde74f182&v=4",
       "url": "https://github.com/minoism"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "心酸",
       "无奈",
       "家庭",
       "独白",
       "熬夜"
-    ]
+    ],
+    "tagHash": "7d566bb0c252a7d36a20d8eaf14bb1f211dd8be3a67ea2fe9634450359b8a763"
   },
   {
     "id": "I_kwDOHp_P8c5PnL_D",
@@ -123,11 +135,13 @@
       "avatarUrl": "https://avatars.githubusercontent.com/u/58068445?u=f9977510d8462f5b9ebaf253df31c37fde74f182&v=4",
       "url": "https://github.com/minoism"
     },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
     "tags": [
       "无奈",
       "荒诞",
       "冷幽默"
-    ]
+    ],
+    "tagHash": "c28a1cdfdb824869186f06d6d439d012f0791facb673051b6a5462edca15114f"
   },
   {
     "id": "I_kwDOHp_P8c5QfLnM",
@@ -140,6 +154,9 @@
       "username": "yutian-9264",
       "avatarUrl": "https://avatars.githubusercontent.com/u/58645467?u=1972f2273bb88ad3a6d5d3cb06576432e30cfb5b&v=4",
       "url": "https://github.com/yutian-9264"
-    }
+    },
+    "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
+    "tags": [],
+    "tagHash": "1a6c38e546254f70387f27b55244252bb4f8cc30dc9c29cf0e0a3ee5be02cb7b"
   }
 ]
