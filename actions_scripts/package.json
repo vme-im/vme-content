@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rimraf dist/",
     "build": "npm run test && npm run clean && rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,9 @@
     "sharp": "^0.34.5"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "typescript-eslint": "^8.20.0",
     "@babel/preset-env": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
     "@rollup/plugin-commonjs": "^25.0.7",
