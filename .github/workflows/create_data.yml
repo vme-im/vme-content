@@ -3,6 +3,9 @@ name: 创建数据
 on:
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   createData:
     if: github.event_name == 'workflow_dispatch'

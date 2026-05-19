@@ -4,6 +4,9 @@ on:
   issues:
     types: [labeled]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   moderate-issue:
     if: github.event_name == 'issues' && github.event.action == 'labeled' && (github.event.label.name == '文案' || github.event.label.name == '梗图')
