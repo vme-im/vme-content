@@ -431,6 +431,19 @@ async function createData() {
     fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
     console.log(`汇总信息已写入: ${summaryPath}`);
     changedFiles.push(summaryPath);
+    // 删除不再属于当前数据集的陈旧按月文件（清除旧管线/旧仓身份残留的僵尸条目，
+    // 使磁盘月文件 == summary == data；删除路径并入 changedFiles 以随提交一并落库）
+    const currentMonths = new Set(Object.keys(dataByMonth));
+    for (const f of fs.readdirSync(dataDir)) {
+        if (!/^\d{4}-\d{2}\.json$/.test(f))
+            continue;
+        if (!currentMonths.has(f.slice(0, 7))) {
+            const stale = path.join(dataDir, f);
+            fs.unlinkSync(stale);
+            console.log(`删除陈旧月份文件: ${stale}`);
+            changedFiles.push(stale);
+        }
+    }
     // 将数据按月份写入对应文件
     for (const [month, items] of Object.entries(dataByMonth)) {
         const filePath = path.join(dataDir, `${month}.json`);
