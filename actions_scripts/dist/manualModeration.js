@@ -1,5 +1,5 @@
 import { c as core } from './index-BHzAQa0b.js';
-import { g as github, a as toIssuePayloadFromRestIssue, m as moderateContent, t as triggerDataUpdate } from './moderationLogic-aR_J1apW.js';
+import { g as github, m as moderateContent, t as triggerDataUpdate } from './moderationLogic-BnDm03sX.js';
 import 'os';
 import 'fs';
 import 'path';
@@ -27,6 +27,24 @@ import 'zlib';
 import 'string_decoder';
 import 'diagnostics_channel';
 import 'sharp';
+
+function toIssuePayloadFromRestIssue(issue) {
+    var _a, _b, _c, _d;
+    return {
+        id: issue.node_id || String(issue.id || ''),
+        number: issue.number,
+        title: issue.title || '',
+        body: (_a = issue.body) !== null && _a !== void 0 ? _a : '',
+        user: {
+            login: ((_b = issue.user) === null || _b === void 0 ? void 0 : _b.login) || 'unknown',
+            avatar_url: ((_c = issue.user) === null || _c === void 0 ? void 0 : _c.avatar_url) || '',
+            html_url: ((_d = issue.user) === null || _d === void 0 ? void 0 : _d.html_url) || '',
+        },
+        created_at: issue.created_at || new Date().toISOString(),
+        updated_at: issue.updated_at || new Date().toISOString(),
+        html_url: issue.html_url || '',
+    };
+}
 
 async function manualModeration() {
     const dryRun = process.env.DRY_RUN === 'true';

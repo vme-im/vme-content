@@ -1,5 +1,6 @@
-import github from '@actions/github'
-
+// REST issue → 内部 payload 的纯映射。
+// 去库后机审不再回调 app 的同步接口；原同步相关函数已随 Phase C 移除，
+// 此文件仅保留 manualModeration 所需的类型与映射函数。
 export interface GitHubIssuePayload {
   id: string
   number: number
@@ -13,13 +14,6 @@ export interface GitHubIssuePayload {
   created_at: string
   updated_at: string
   html_url: string
-}
-
-function normalizeSyncUrl(value: string): string {
-  if (value.endsWith('/api/sync')) {
-    return value
-  }
-  return `${value.replace(/\/$/, '')}/api/sync`
 }
 
 export function toIssuePayloadFromRestIssue(issue: any): GitHubIssuePayload {
@@ -36,50 +30,5 @@ export function toIssuePayloadFromRestIssue(issue: any): GitHubIssuePayload {
     created_at: issue.created_at || new Date().toISOString(),
     updated_at: issue.updated_at || new Date().toISOString(),
     html_url: issue.html_url || '',
-  }
-}
-
-export async function fetchIssuePayload(issueNumber: number): Promise<GitHubIssuePayload> {
-  if (!process.env.GITHUB_TOKEN) {
-    throw new Error('GITHUB_TOKEN 不存在')
-  }
-
-  const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
-  const response = await octokit.rest.issues.get({
-    ...github.context.repo,
-    issue_number: issueNumber,
-  })
-
-  return toIssuePayloadFromRestIssue(response.data)
-}
-
-export async function syncIssueToApp(issuePayload: GitHubIssuePayload): Promise<void> {
-  const syncUrlRaw = process.env.SYNC_API_URL
-  const apiKey = process.env.SYNC_API_KEY
-
-  if (!syncUrlRaw || !apiKey) {
-    console.warn('SYNC_API_URL 或 SYNC_API_KEY 未配置，跳过同步')
-    return
-  }
-
-  const repo = github.context.repo
-  const syncUrl = normalizeSyncUrl(syncUrlRaw)
-
-  const response = await fetch(syncUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-API-Key': apiKey,
-    },
-    body: JSON.stringify({
-      mode: 'single',
-      issue: issuePayload,
-      repo: { owner: repo.owner, name: repo.repo },
-    }),
-  })
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => '')
-    throw new Error(`Sync API 失败: ${response.status} ${response.statusText} ${text}`)
   }
 }

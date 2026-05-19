@@ -7,7 +7,7 @@ import {
   getIssueLabels,
   dispatchWorkflow,
 } from './utils'
-import { fetchIssuePayload, GitHubIssuePayload, syncIssueToApp } from './syncClient'
+import { GitHubIssuePayload } from './syncClient'
 
 // omni-moderation-latest 支持的类别映射
 const categoriesTextMap: Record<string, string> = {
@@ -137,7 +137,7 @@ export async function moderateContent(
   issueNumber: number,
   issueBody: string,
   dryRun: boolean = false,
-  issuePayload?: GitHubIssuePayload,
+  _issuePayload?: GitHubIssuePayload,
 ): Promise<ModerationResult> {
   // 检查issue是否已被审核（已有特定标签）
   const currentLabels = await getIssueLabels(issueNumber)
@@ -269,12 +269,6 @@ export async function moderateContent(
           `🤝您的内容已成功收录，感谢您的贡献！`,
         )
         await closeIssue(issueNumber)
-        try {
-          const payload = issuePayload || await fetchIssuePayload(issueNumber)
-          await syncIssueToApp(payload)
-        } catch (error) {
-          console.error('同步到 vme-app 失败：', error)
-        }
       } else {
         console.log('[试运行] 将标记为收录并关闭')
       }
