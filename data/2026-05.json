@@ -12,7 +12,11 @@
       "url": "https://github.com/zkl2333"
     },
     "sourceRepo": "vme-im/vme-content",
-    "tags": [],
+    "tags": [
+      "通知",
+      "群聊",
+      "荒诞"
+    ],
     "tagHash": "09b89bc2b37c10e025e871f0e29d18ac4c3390e46aa90ed31d61a910fe8c30bb"
   }
 ]

@@ -552,7 +552,11 @@
       "url": "https://github.com/rin0chan"
     },
     "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
-    "tags": [],
+    "tags": [
+      "几何证明",
+      "中点垂线",
+      "数值约束"
+    ],
     "tagHash": "1fdb90e57981b1ff2bb155f0a07412a89c7e7beffb2d50c99d428a6b9a2dfea3"
   },
   {
@@ -1115,7 +1119,11 @@
       "url": "https://github.com/brcarry"
     },
     "sourceRepo": "rin0chan/KFC-Crazy-Thursday",
-    "tags": [],
+    "tags": [
+      "自嘲",
+      "心酸",
+      "群聊"
+    ],
     "tagHash": "f0aef9812e1c555c2c4f18cdd82296d7122e9d384220534a3dd3496666a3cd15"
   },
   {
