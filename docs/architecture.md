@@ -23,6 +23,7 @@
 | 2026-05-19 | **Phase B 完成：app 去库，默认读快照（线上验证无回归）** | vme-app `SnapshotProvider implements DataProvider` 读 vme-content raw 快照（summary+月文件），内存建模+5min TTL+故障降级；`getDataProvider` 默认快照，Neon 保留（`DATA_PROVIDER=neon` 可回退、`git revert` 确定性兜底）；不再硬依赖 `DATABASE_URL`。createData 补 `reactionsCount`。线上 vme.im 实测：`/api/items` total=278（=快照，非 Neon 281）、详情(id/issue号)/随机/分页/首页/jokes/leaderboard/status 全 200，与切换前一致。13 条 vitest + 全量 21 测试通过 |
 | 2026-05-19 | **快照源用 raw.githubusercontent，非 R2（修订原 §9 item5）** | createData 跑在 vme-content Actions，R2 上传需该仓 R2 Actions secrets（无权配）。raw 读已在 git 的快照：零新 secret、GitHub 原生、契合免费/抗腐烂，完全达成去库。**R2 上传为 follow-up**：待用户在 vme-content 配 R2 Actions secrets 后再接（属优化，非阻塞） |
 | 2026-05-20 | **A5 完成：拆旧打标路径（线上验证）** | 删 `/api/classify`、`ClassifyTrigger`、single-sync `analyzeContent`、随之无引用的 `lib/sync/content-analyzer`；详情页改为静态渲染快照 `joke.tags`（原 UI 保留）。净 -441 行、tsc/21 测试过、全仓无残引用；线上 vme.im：详情页静态标签正常、`POST /api/classify`→404、items=278 各端点 200 无回归。`/api/sync` 与 Neon 写本身留 Phase C |
+| 2026-05-20 | **Phase C 完成：Neon 在线写入退役 + 抗腐烂时限清零（线上验证）** | **C1** Node→24（actions_scripts volta 24.13.0 清 eslint EBADENGINE；3 workflow setup-node@24 + `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`，Node20 弃用警告→0，create_data CI 绿/278）。**C2** 机审切断 `syncIssueToApp`/`SYNC_API_*`，syncClient 精简为纯映射（dist 重建并清孤儿 chunk）。**C3** 删 vme-app `/api/sync` + `lib/sync` 全层 + `/api/status` 去 sync_logs + Dashboard 去 SyncLogsTable + vercel cron 移除（净 -1246 行）；线上 `/api/status` 200 且无 syncLogs、`/api/sync`→404、items=278、各页 200 无回归。**C4** 核实点赞/like 路由零 Neon 依赖（GitHubService 直连，决策 A 成立）。Neon 仅余 `NeonProvider` 应急回退（`DATA_PROVIDER=neon`，非默认） |
 
 > **更正（2026-05-19）**：早期讨论曾称产物落点为「S3」。经核对代码（`src/app/api/image-upload/route.ts` 用 `@aws-sdk/client-s3` 指向 `*.r2.cloudflarestorage.com`，`.env.local.example` 仅有 `R2_*` 凭据），实为 **Cloudflare R2**。架构不变，仅正名并升级成本结论：R2 永久免费额度 + 零 egress，此规模长期实际 $0，且不再有 AWS「12 个月免费额度到期转收费」那条腐烂风险。
 
@@ -99,7 +100,7 @@
 **已决**（见 §0）：点赞依赖 GitHub（A）；快照产物落 Cloudflare R2；tag 用 git 小缓存、不回写 Issue 标签。
 **共识**：DB-less 为默认；tag 入快照；双速架构；真相层 = Issues + git 小 tag 缓存；`DataProvider` 为扩容接缝；读模型 = 无正文索引 + 正文按需。
 
-**待决**：无。**Phase A、Phase B、A5 均已完成并线上验证**（见 §0）。下一步：**Phase C**（退役 sync 的 Neon 写入/`/api/sync`/`sync_logs`/Neon 依赖、点赞投影=决策 A、抗腐烂闸；含时限项 ⚠️ `actions/checkout@v4` 2026-06-02 强制 Node24、eslint/tseslint 要 Node≥20.19 vs volta 20.12.2）+ **follow-up**（R2 上传，待 vme-content R2 Actions secrets；用户暂缓）。
+**待决**：无。**Phase A / B / A5 / C 全部完成并线上验证**（见 §0）——app 与流水线已不依赖 Neon 在线写入，抗腐烂时限项清零。**剩余**：① R2 上传 follow-up（用户暂缓，待 vme-content R2 Actions secrets）；② 已知低优先残留：actions_scripts 4 个旧 jest 套件需改 `unstable_mockModule`（非阻塞，dist 经 rollup 直出绕过 test gate）。Neon 仅作 `NeonProvider` 应急回退保留。
 
 ## 9. 实施路线图（Phase 2）
 
