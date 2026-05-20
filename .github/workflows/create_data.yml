@@ -19,10 +19,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: actions_scripts/package-lock.json
+      - name: 安装依赖
+        run: |
+          cd actions_scripts
+          npm ci
       - name: 运行脚本
         run: |
           cd actions_scripts
-          node ./dist/createData.js
+          npx tsx src/createData.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}

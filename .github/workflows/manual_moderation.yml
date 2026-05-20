@@ -34,7 +34,7 @@ jobs:
       - name: 运行手动审核脚本
         run: |
           cd actions_scripts
-          node ./dist/manualModeration.js
+          npx tsx src/manualModeration.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}

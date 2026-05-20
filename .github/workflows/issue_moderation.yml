@@ -30,7 +30,7 @@ jobs:
       - name: 运行脚本
         run: |
           cd actions_scripts
-          node ./dist/moderateIssue.js
+          npx tsx src/moderateIssue.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
