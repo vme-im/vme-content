@@ -2,8 +2,7 @@
 
 > **状态**：正式文档。本项目架构的权威决策与实施规格；全部关键决策已定（见 §0 决策日志），实施按 §9 路线图推进、遵循「先 review 再 commit」。后续变更以新增决策日志条目记录。
 > **范围**：vme-app + vme-content 整体架构。
-> **与旧文 `llm-auto-tagging.md`（仍在 vme-app）的关系**：旧文所述设计（single-sync LLM 打标 + Neon 为库 + 路径相关打标）已被本文件**取代**，旧文已加历史横幅、仅作存档，**一切以本文件为准**（删除待用户确认）。旧文地址：<https://github.com/vme-im/vme-app/blob/main/docs/plan/llm-auto-tagging.md>
-> **本文件是跨 vme-app / vme-content 的唯一权威规格**，置于 vme-content（耐久真相侧）；vme-app 仅留 URL 指针。
+> **本文件是跨 vme-app / vme-content 的唯一权威规格**，置于 vme-content（耐久真相侧）；vme-app 仅留 URL 指针。旧文 `vme-app/docs/plan/llm-auto-tagging.md` 已于 2026-05-20 随文档整理一并删除。
 
 ---
 
@@ -28,6 +27,7 @@
 | 2026-05-20 | **R2 快照通道取消**（原 follow-up 注销） | 性能落差实测仅 ~200ms cold（snapshot.sql 拉 git ~550ms vs 拉 R2 `.db` ~350ms），在 sql.js 已让 cold 从 1100ms→500ms 的基础上边际收益小；保留则架构挂个常年 TODO + 双源管理负担。决定以 git `data/snapshot.sql` 作快照唯一通道。**澄清**：取消的是「快照产物走 R2」这条 follow-up，**梗图上传（vme-app `/api/image-upload`）走 R2 保持不变**（账户/凭据/`r2.vme.im` 域名仍用）。未来真要重新引入按新决策处理 |
 | 2026-05-20 | **读模型默认切 `SqlSnapshotProvider`**（兑现 §5「无正文索引 + 正文按需」承诺，线上验证） | vme-content `actions_scripts` 加 `generateSnapshotSql.ts`，createData 产 `data/snapshot.sql`（210KB / 1642 行 / items + item_tags 两表 + 4 索引 / 稳定排序 diff 干净 / 单测 10 个 case 覆盖 escape/排序/确定性）。vme-app 加 `SqlSnapshotProvider implements DataProvider`：sql.js 装载 + 模块单例 + 5min TTL + graceful-degrade（17 个单测全过）；`outputFileTracingIncludes: { '/**': ['sql-wasm.wasm'] }` 强制 wasm 进所有 lambda。`getDataProvider()` 默认切，降级梯队 `DATA_PROVIDER=snapshot\|neon`。**实测**：spike #4 测 cold init_sqljs 29ms/build_db 60-100ms/query 0.5ms；线上 vme.im 全路径 200 无回归（jokes/text/meme/tag=恋爱/作者页 hero=125/详情页/榜单/api/status 数据全一致），warm ~470ms。`/jokes/[id]` 在 preview 500 是 preview env 缺 `NEXTAUTH_SECRET` 的 pre-existing 配置问题，与 SqlSnapshotProvider 无关 |
 | 2026-05-20 | **actions_scripts 去 rollup，改用 tsx 直接跑 .ts**（顺手清理） | rollup 打 bundle + 提交 dist/ 中间产物双重成本（dist 历史 27k 行 chunk + 孤儿 chunk 风险 + 每次改 src/ 需 rollup -c），换 tsx 后零代码改 + 移除 5 个 devDeps（rollup/rimraf/3 个 @rollup plugin）+ 删 32k 行净。3 个 workflow（create_data/issue_moderation/manual_moderation）`node dist/X.js` → `npx tsx src/X.ts`；create_data 加 setup-node cache + npm ci 步骤。create_data CI 绿、产出 snapshot.sql 与 rollup 路径**字节完全一致**（同份 generateSnapshotSql.ts，稳定排序 → 确定性达成）|
+| 2026-05-20 | **Neon + 月份 JSON / summary.json / data.json 双双正式退役**（文档整理时彻底清算） | 经线上验证 SqlSnapshotProvider 已是默认且无回归（见上条），保留 Neon/JSON 两条回退路径只是给「双源管理 + 文档错位风险」续命。一次清算：① 删 `vme-app/src/lib/data-access/neon-provider*` + `snapshot-provider*`（共 4 文件）+ `@neondatabase/serverless` 依赖；② `getDataProvider()` 直接 `new SqlSnapshotProvider()`，去掉 `DATA_PROVIDER` env 分支；③ `SqlSnapshotProvider` 去 summary.json 依赖，summary（totalItems/contributors/months）全部 SQL 现算；④ 删 vme-content `data/*.json`（37 个月份）+ `data/summary.json` + 根 `data/data.json` —— 唯一产物只剩 `data/snapshot.sql` + 冻结归档 `data/archive-rin0chan.json`；⑤ createData 不再写月份 JSON / summary.json，tag 缓存改从 snapshot.sql 直读（`actions_scripts/src/utils/snapshotReader.ts` 新增，与 vme-app 同栈 sql.js）；⑥ 机审 `findSimilarIssue` 同迁；⑦ 顺手修生产 URL bug：snapshot.sql 新增 `url` 列，rowToItem 透传真实 issue url（之前用 node_id 错拼 `vme-content/issues/${node_id}`，跨仓 archive-rin0chan 链接全错）；⑧ snapshot.sql 新增 `tag_hash` 列（月份 JSON 退役后这是唯一 id → tagHash 真相）。**验证**：vme-app vitest 18/18、actions_scripts jest 53/53；archive-rin0chan 跑出的 snapshot.sql 首条 URL = `https://github.com/rin0chan/KFC-Crazy-Thursday/issues/145`（正确，不再被错拼到 vme-content）。.env.local.example 同步精简（删 DATABASE_URL/SYNC_API_*/WEBHOOK_*/CONTENT_DATA_URL/AI_API_*） |
 
 > **更正（2026-05-19）**：早期讨论曾称产物落点为「S3」。经核对代码（`src/app/api/image-upload/route.ts` 用 `@aws-sdk/client-s3` 指向 `*.r2.cloudflarestorage.com`，`.env.local.example` 仅有 `R2_*` 凭据），实为 **Cloudflare R2**。架构不变，仅正名并升级成本结论：R2 永久免费额度 + 零 egress，此规模长期实际 $0，且不再有 AWS「12 个月免费额度到期转收费」那条腐烂风险。
 
@@ -77,11 +77,12 @@
 ## 5. 数据与产物设计（结论）
 
 - **真相**：GitHub Issues，不额外存。
-- **tag 缓存**：小 git 文件（**已定，不回写 Issue 标签**），`tagHash = sha256(tagPromptVersion + "\n" + preprocess(title,body))`；上一版快照即缓存，命中则不调 LLM；`tagPromptVersion` bump 即全量重打标。
-- **查询读模型**（替代 Neon 的读职责）：**`SqlSnapshotProvider` 装载 `data/snapshot.sql`**（已上线，见 §0 2026-05-20 决策）——SQLite 两表（`items` 无正文索引列 + `item_tags` 正规化）+ 4 索引（author/type/created_at/reactions），所有过滤维度走索引；正文与索引同表存放（一次装载，正文按 SQL `WHERE id=?` 按需取），契合「无正文索引 + 正文按需」承诺。原文「服务端内存排序筛选分页搜索」由 SQL 表达替代；`SnapshotProvider`（拉 month JSON）保留作 `DATA_PROVIDER=snapshot` 应急回退。
-- **summary**：与索引**同一次 createData、同一内存数组原子生成**的预聚合（totalItems/contributors/months/topTags/版本号），统计零扫描，杜绝多文件漂移。
-- **产物落点**：**git（`vme-im/vme-content/data/snapshot.sql`，210KB）**——稳定排序 INSERT 文本、diff 可审计、git pack 友好；vme-app 通过 `raw.githubusercontent` 拉。~~R2~~ 已取消（见 §0 2026-05-20 决策；梗图上传仍走 R2 不变）。
+- **tag 缓存**：写在 `snapshot.sql` 的 `items.tag_hash` 列（git 内随快照一并 diff），`tagHash = sha256(tagPromptVersion + "\n" + preprocess(title,body))`；上一版快照即缓存，命中则不调 LLM；`tagPromptVersion` bump 即全量重打标。
+- **查询读模型**：**`SqlSnapshotProvider` 装载 `data/snapshot.sql`**（已上线，见 §0 2026-05-20 两条决策）——SQLite 两表（`items` 含 tag_hash + url 列 + `item_tags` 正规化）+ 4 索引（author/type/created_at/reactions），所有过滤维度走索引；正文与索引同表存放（一次装载，正文按 SQL `WHERE id=?` 按需取），契合「无正文索引 + 正文按需」承诺。`NeonProvider` / `SnapshotProvider`（拉 month JSON）已于 2026-05-20 一并删除，无回退兜底——快照本身即兜底（远端 fetch 失败时回退上次 good model 或空 db）。
+- **summary**：完全由 SQL 现算（`COUNT(*)` / `GROUP BY author` / `strftime('%Y-%m', ...)` 按 UTC+8 切月），无独立 summary.json，杜绝多文件漂移。
+- **产物落点**：**git（`vme-im/vme-content/data/snapshot.sql`，~210KB）**——稳定排序 INSERT 文本、diff 可审计、git pack 友好；vme-app 通过 `raw.githubusercontent` 拉。~~R2 follow-up~~ 已取消（见 §0 2026-05-20 决策；梗图上传仍走 R2 不变）。冻结归档 `data/archive-rin0chan.json` 是 createData 的输入（一次性 139 条 rin0chan 历史），不是读路径产物。
 - **稳定排序**：snapshot.sql 按 `items.id ASC` + `item_tags (item_id, tag) ASC` 固定后写出，保证 git diff 干净（数据无变动则 SQL 字节完全一致）。
+- **URL 真相**：`items.url` 列直接由 `fetchIssues` 抓回的 GraphQL `url` 字段写入（含跨仓 archive 的 `rin0chan/KFC-Crazy-Thursday` URL），消除「用 node_id 错拼 vme-content URL」的旧 bug。
 
 ## 6. 关键流程结论
 
@@ -101,10 +102,10 @@
 
 ## 8. 已决 vs 待决
 
-**已决**（见 §0）：点赞依赖 GitHub（A）；快照产物落 Cloudflare R2；tag 用 git 小缓存、不回写 Issue 标签。
-**共识**：DB-less 为默认；tag 入快照；双速架构；真相层 = Issues + git 小 tag 缓存；`DataProvider` 为扩容接缝；读模型 = 无正文索引 + 正文按需。
+**已决**（见 §0）：点赞依赖 GitHub（A）；快照产物落 git（R2 follow-up 已取消）；tag 用 snapshot.sql 的 tag_hash 列、不回写 Issue 标签；**Neon + JSON 月份 / summary / data.json 已彻底退役**（2026-05-20）。
+**共识**：DB-less = 唯一形态（不再有应急回退）；tag 入快照；双速架构；真相层 = Issues + git snapshot.sql；`DataProvider` 为扩容接缝；读模型 = 无正文索引 + 正文按需。
 
-**待决**：无。**Phase A / B / A5 / C 全部完成并线上验证**（见 §0）——app 与流水线已不依赖 Neon 在线写入，抗腐烂时限项清零。**剩余**：① R2 上传 follow-up（用户暂缓，待 vme-content R2 Actions secrets）；② 已知低优先残留：actions_scripts 4 个旧 jest 套件需改 `unstable_mockModule`（非阻塞，dist 经 rollup 直出绕过 test gate）。Neon 仅作 `NeonProvider` 应急回退保留。
+**待决**：无。Phase A / B / A5 / C 全部完成并线上验证；2026-05-20 文档整理一并清算回退路径，archive 之外的 JSON 全删、`@neondatabase/serverless` 依赖移除。
 
 ## 9. 实施路线图（Phase 2）
 
@@ -123,13 +124,13 @@
 7. 实现 `SnapshotProvider implements DataProvider`：读 S3 索引建内存 + `Map`，正文按需，summary 直读；`getDataProvider()` 由 `NeonProvider` 切 `SnapshotProvider`，`server-utils.ts` 以上不动。
 8. 等价性验证：列表/分页/随机/详情/精选/搜索/统计读路径全部对齐。
 
-**Phase C — 退役与抗腐烂加固**
+**Phase C — 退役与抗腐烂加固** — ✅ **已完成（2026-05-20）**
 9. 移除 sync 的 DB 写入、`sync_logs` 水位线、Neon 依赖。
 10. 点赞投影（决策 A）：GitHub 为真相不变；计数随产物刷新；详情页保留实时拉 GitHub（已 DB 无关）。
 11. 抗腐烂闸：ingest 事件触发（无 cron，免 60 天禁用问题）；读公开仓免令牌、必要时 Actions 原生 `GITHUB_TOKEN`；Node/Action SHA/lockfile 钉死；静态降级兜底验证。
-12. 处理 `llm-auto-tagging.md`（标历史/废弃，删除前确认）。
+12. 删 `vme-app/docs/plan/llm-auto-tagging.md`（2026-05-20 文档整理时一并删除，无遗留引用）。
 
-**回退方案**：任一阶段失败，`SnapshotProvider` 与 `NeonProvider` 同接口可即时切回；产物可从 Issues + tag 缓存重建，无数据风险。
+**回退方案**：任一阶段失败时（2026-05-20 之前）`SnapshotProvider` / `NeonProvider` 同接口可即时切回；这两条已于 2026-05-20 删除，但产物仍可从 Issues + snapshot.sql 的 tag_hash 缓存确定性重建，git revert 是最终兜底。
 
 ## 10. 扩张分阶段路线（骨架）
 

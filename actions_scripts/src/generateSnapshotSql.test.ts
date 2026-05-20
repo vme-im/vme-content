@@ -17,6 +17,7 @@ describe('generateSnapshotSql', () => {
     const sql = generateSnapshotSql([])
     expect(sql).toContain('CREATE TABLE items (')
     expect(sql).toContain("CHECK (type IN ('text','meme'))")
+    expect(sql).toContain('tag_hash TEXT NOT NULL')
     expect(sql).toContain('CREATE INDEX idx_items_author ON items(author);')
     expect(sql).toContain('CREATE TABLE item_tags (')
     expect(sql).toContain('CREATE INDEX idx_item_tags_tag ON item_tags(tag);')
@@ -31,6 +32,15 @@ describe('generateSnapshotSql', () => {
     expect(sql).toContain(
       "INSERT INTO items VALUES ('a','hello','b','zkl2333',",
     )
+  })
+
+  it('tagHash + url 写入 items 末两列；缺失退化为空串', () => {
+    const sql = generateSnapshotSql([
+      mkItem({ id: 'a', tagHash: 'deadbeef', url: 'https://x/1' }),
+      mkItem({ id: 'b' }),
+    ])
+    expect(sql).toContain(",'text','deadbeef','https://x/1');")
+    expect(sql).toContain(",'text','','');")
   })
 
   it('SQL 注入防护：单引号 escape 为两个单引号', () => {
@@ -62,8 +72,8 @@ describe('generateSnapshotSql', () => {
     const lines = sql.split('\n')
     const lineA = lines.find((l) => l.startsWith("INSERT INTO items VALUES ('a',"))
     const lineB = lines.find((l) => l.startsWith("INSERT INTO items VALUES ('b',"))
-    expect(lineA).toMatch(/,'text'\);$/)
-    expect(lineB).toMatch(/,'meme'\);$/)
+    expect(lineA).toMatch(/,'text','',''\);$/)
+    expect(lineB).toMatch(/,'meme','',''\);$/)
   })
 
   it('item_tags 用单独表，按 (item_id, tag) 稳定排序', () => {
@@ -115,6 +125,6 @@ describe('generateSnapshotSql', () => {
 
   it('reactionsCount 默认 0', () => {
     const sql = generateSnapshotSql([mkItem({ id: 'a' })])
-    expect(sql).toMatch(/INSERT INTO items VALUES \('a','t','b','u',\d+,0,/)
+    expect(sql).toMatch(/INSERT INTO items VALUES \('a','t','b','u',\d+,0,'text','',''\);/)
   })
 })

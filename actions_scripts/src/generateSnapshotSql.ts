@@ -13,6 +13,12 @@ export interface SnapshotItem {
   author: { username: string }
   tags?: string[]
   reactionsCount?: number
+  // url 列：原快照只存 id（node_id），下游拼 URL 时把 node_id 当 issue number 是错的；
+  // 写真实 url 进 snapshot.sql，保证跨仓（如 archive-rin0chan）也能指对原始 issue
+  url?: string
+  // tag_hash 写入 snapshot.sql，使 createData 下次跑能从 snapshot.sql 直读 tag 缓存
+  // （月份 JSON 退役后这是唯一的 id → tagHash 真相来源）
+  tagHash?: string
 }
 
 function escSqlString(s: string): string {
@@ -35,7 +41,9 @@ const SCHEMA_LINES: string[] = [
   '  author TEXT NOT NULL,',
   '  created_at INTEGER NOT NULL,',
   '  reactions INTEGER NOT NULL,',
-  "  type TEXT NOT NULL CHECK (type IN ('text','meme'))",
+  "  type TEXT NOT NULL CHECK (type IN ('text','meme')),",
+  '  tag_hash TEXT NOT NULL DEFAULT \'\',',
+  '  url TEXT NOT NULL DEFAULT \'\'',
   ');',
   'CREATE INDEX idx_items_author ON items(author);',
   'CREATE INDEX idx_items_type ON items(type);',
@@ -67,9 +75,11 @@ export function generateSnapshotSql(items: SnapshotItem[]): string {
     const createdMs = new Date(it.createdAt).getTime() || 0
     const reactions = it.reactionsCount ?? 0
     const type = detectType(body)
+    const tagHash = it.tagHash || ''
+    const url = it.url || ''
 
     itemInserts.push(
-      `INSERT INTO items VALUES ('${escSqlString(id)}','${escSqlString(title)}','${escSqlString(body)}','${escSqlString(author)}',${createdMs},${reactions},'${type}');`,
+      `INSERT INTO items VALUES ('${escSqlString(id)}','${escSqlString(title)}','${escSqlString(body)}','${escSqlString(author)}',${createdMs},${reactions},'${type}','${escSqlString(tagHash)}','${escSqlString(url)}');`,
     )
 
     for (const tag of it.tags || []) {

@@ -1,6 +1,7 @@
 import { fetchIssues } from "./utils/fetchIssues";
-import { tagContent, computeTagHash } from './tagger'
+import { tagContent } from './tagger'
 import { generateSnapshotSql } from './generateSnapshotSql'
+import { readTagCache } from './utils/snapshotReader'
 import core from "@actions/core";
 import fs from "fs";
 import path from "path";
@@ -38,26 +39,10 @@ async function createData() {
     console.log(`创建目录: ${dataDir}`)
   }
 
-  // 整体覆盖前，先从现有按月文件收集 tag 缓存（id -> {tagHash, tags}），避免丢标
-  const tagCache = new Map<string, { tagHash: string; tags: string[] }>()
-  for (const f of fs.readdirSync(dataDir)) {
-    if (!/^\d{4}-\d{2}\.json$/.test(f)) continue
-    const prev = JSON.parse(fs.readFileSync(path.join(dataDir, f), 'utf8'))
-    for (const it of prev) {
-      if (!it || typeof it.id !== 'string' || !Array.isArray(it.tags) || it.tags.length === 0) {
-        continue
-      }
-      if (typeof it.tagHash === 'string' && it.tagHash) {
-        tagCache.set(it.id, { tagHash: it.tagHash, tags: it.tags })
-      } else {
-        // 回填的 tag 无 tagHash：用规范算法现算，使首跑即缓存命中、不调 LLM、不覆盖已有标签
-        tagCache.set(it.id, {
-          tagHash: computeTagHash(it.title || '', it.body || ''),
-          tags: it.tags,
-        })
-      }
-    }
-  }
+  // tag 缓存：从上一版 snapshot.sql 读 id → {tagHash, tags}，命中跳 LLM
+  // 月份 JSON / summary.json 已退役（架构 §5），snapshot.sql 是唯一真相
+  const tagCache = await readTagCache(path.join(dataDir, 'snapshot.sql'))
+  console.log(`tag 缓存装载：${tagCache.size} 条`)
 
   // 合并冻结归档（rin0chan 139 条，不再 live 抓取）
   const archivePath = path.join(dataDir, 'archive-rin0chan.json')
@@ -89,100 +74,11 @@ async function createData() {
   }
   console.log(`打标完成：缓存命中 ${cacheHit}，重算 ${reTagged}`)
 
-  // 按月份分组数据（使用中国时间 UTC+8）
-  const dataByMonth: Record<string, any[]> = {}
-  data.forEach((item) => {
-    // 创建中国时区的日期对象
-    const utcDate = new Date(item.createdAt)
-    const chinaTime = new Date(utcDate.getTime() + 8 * 60 * 60 * 1000) // UTC+8
-    const month = `${chinaTime.getFullYear()}-${String(chinaTime.getMonth() + 1).padStart(2, '0')}`
-
-    if (!dataByMonth[month]) {
-      dataByMonth[month] = []
-    }
-    dataByMonth[month].push(item)
-  })
-
-  // 记录更改的文件
+  // 唯一产物：data/snapshot.sql（架构 §5；月份 JSON / summary.json / data.json 已退役）
   const changedFiles: string[] = []
-
-  // 统计贡献者信息
-  const contributorMap = new Map<string, {
-    username: string
-    count: number
-    avatarUrl: string
-    url: string
-  }>()
-
-  data.forEach((item) => {
-    const { username, avatarUrl, url } = item.author
-    if (contributorMap.has(username)) {
-      contributorMap.get(username)!.count++
-    } else {
-      contributorMap.set(username, {
-        username,
-        count: 1,
-        avatarUrl,
-        url,
-      })
-    }
-  })
-
-  // 转换为数组并按贡献数排序
-  const contributors = Array.from(contributorMap.values())
-    .sort((a, b) => b.count - a.count)
-
-  // 获取前10名贡献者用于排行榜
-  const topContributors = contributors.slice(0, 10)
-
-  // 生成汇总信息
-  const summary = {
-    totalItems: data.length,
-    totalContributors: contributors.length,
-    months: Object.entries(dataByMonth)
-      .map(([month, items]) => ({
-        month,
-        count: items.length,
-      }))
-      .sort((a, b) => b.month.localeCompare(a.month)), // 按月份降序排序
-    contributors,
-    topContributors,
-    updatedAt: new Date().toISOString(),
-  }
-
-  // 写入汇总信息
-  const summaryPath = path.join(dataDir, 'summary.json')
-  fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2))
-  console.log(`汇总信息已写入: ${summaryPath}`)
-  changedFiles.push(summaryPath)
-
-  // 删除不再属于当前数据集的陈旧按月文件（清除旧管线/旧仓身份残留的僵尸条目，
-  // 使磁盘月文件 == summary == data；删除路径并入 changedFiles 以随提交一并落库）
-  const currentMonths = new Set(Object.keys(dataByMonth))
-  for (const f of fs.readdirSync(dataDir)) {
-    if (!/^\d{4}-\d{2}\.json$/.test(f)) continue
-    if (!currentMonths.has(f.slice(0, 7))) {
-      const stale = path.join(dataDir, f)
-      fs.unlinkSync(stale)
-      console.log(`删除陈旧月份文件: ${stale}`)
-      changedFiles.push(stale)
-    }
-  }
-
-  // 将数据按月份写入对应文件
-  for (const [month, items] of Object.entries(dataByMonth)) {
-    const filePath = path.join(dataDir, `${month}.json`)
-    fs.writeFileSync(filePath, JSON.stringify(items, null, 2))
-    console.log(`月份数据已写入: ${filePath}，共 ${items.length} 条`)
-
-    // 直接记录文件的绝对路径
-    changedFiles.push(filePath)
-  }
-
-  // 生成 SQL 快照（供 vme-app SqlSnapshotProvider 装载，兑现架构 §5「无正文索引 + 正文按需」）
   const snapshotSqlPath = path.join(dataDir, 'snapshot.sql')
   fs.writeFileSync(snapshotSqlPath, generateSnapshotSql(data))
-  console.log(`SQL 快照已写入: ${snapshotSqlPath}`)
+  console.log(`SQL 快照已写入: ${snapshotSqlPath}，共 ${data.length} 条`)
   changedFiles.push(snapshotSqlPath)
 
   // 提交到仓库
@@ -201,7 +97,7 @@ async function createData() {
         execSync(`git add "${file}"`)
       })
 
-      execSync('git commit -m "自动更新按月份数据"')
+      execSync('git commit -m "自动更新 snapshot.sql"')
       execSync('git push')
       console.log('数据变化已经提交到仓库')
     } catch (error) {

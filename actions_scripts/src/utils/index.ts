@@ -1,15 +1,7 @@
 import github from '@actions/github'
-import path from 'path'
-import fs from 'fs'
-import sharp from 'sharp'
 import { IssueNode } from './fetchIssues'
 import { removeSeparator } from './removeSeparator'
-
-// 图片哈希相关类型
-interface ImageHashResult {
-  url: string
-  hash: string
-}
+import { readSnapshotIssues } from './snapshotReader'
 
 // 从 issue body 中提取图片 URL
 export function extractImageUrls(body: string): string[] {
@@ -25,91 +17,6 @@ export function extractImageUrls(body: string): string[] {
 // 从 issue body 中提取纯文本（移除图片 Markdown）
 export function extractText(body: string): string {
   return body.replace(/!\[.*?\]\(https?:\/\/[^\s)]+\)/g, '').trim()
-}
-
-// 判断 issue 是否包含图片
-export function hasImage(body: string): boolean {
-  return /!\[.*?\]\((https?:\/\/[^\s)]+)\)/.test(body)
-}
-
-// 计算图片的感知哈希 (pHash)
-// 使用 sharp 生成缩略图后计算灰度平均值哈希
-export async function calculateImageHash(imageUrl: string): Promise<string | null> {
-  try {
-    console.log(`正在下载并计算图片哈希: ${imageUrl}`)
-
-    // 下载图片
-    const response = await fetch(imageUrl)
-    if (!response.ok) {
-      console.log(`下载图片失败: ${imageUrl}`)
-      return null
-    }
-
-    const buffer = Buffer.from(await response.arrayBuffer())
-
-    // 使用 sharp 处理图片：
-    // 1. 调整为 8x8 像素
-    // 2. 转为灰度
-    // 3. 计算哈希
-    const { data, info } = await sharp(buffer)
-      .resize(8, 8, { fit: 'fill' })
-      .greyscale()
-      .raw()
-      .toBuffer({ resolveWithObject: true })
-
-    // 计算平均值
-    let sum = 0
-    for (let i = 0; i < data.length; i++) {
-      sum += data[i]
-    }
-    const avg = sum / data.length
-
-    // 生成哈希字符串（每位代表一个像素是否大于平均值）
-    let hash = ''
-    for (let i = 0; i < data.length; i++) {
-      hash += data[i] > avg ? '1' : '0'
-    }
-
-    // 将二进制转为十六进制，压缩长度
-    const hexHash = BigInt('0b' + hash).toString(16).padStart(16, '0')
-    console.log(`图片哈希计算完成: ${hexHash}`)
-    return hexHash
-  } catch (error) {
-    console.error(`计算图片哈希失败 (${imageUrl}):`, error)
-    return null
-  }
-}
-
-// 计算两个十六进制哈希的汉明距离
-export function hammingDistance(hash1: string, hash2: string): number {
-  // 将十六进制转为二进制
-  const bin1 = BigInt('0x' + hash1).toString(2).padStart(64, '0')
-  const bin2 = BigInt('0x' + hash2).toString(2).padStart(64, '0')
-
-  let distance = 0
-  for (let i = 0; i < bin1.length; i++) {
-    if (bin1[i] !== bin2[i]) distance++
-  }
-  return distance
-}
-
-// 判断两张图片是否相似（汉明距离阈值 < 10）
-export function isImageSimilar(hash1: string, hash2: string, threshold: number = 10): boolean {
-  return hammingDistance(hash1, hash2) < threshold
-}
-
-// 批量计算图片哈希
-export async function calculateImageHashes(urls: string[]): Promise<ImageHashResult[]> {
-  const results: ImageHashResult[] = []
-
-  for (const url of urls) {
-    const hash = await calculateImageHash(url)
-    if (hash) {
-      results.push({ url, hash })
-    }
-  }
-
-  return results
 }
 
 // 获取 Octokit 实例
@@ -232,98 +139,43 @@ export function isSimilar(str1: string, str2: string): boolean {
   return distance / maxLength < 0.2
 }
 
-// 读取本地文件保存的所有文案
-export async function fetchLocalIssues(): Promise<IssueNode[]> {
-  const dataDir = path.join(process.cwd(), '../', 'data')
-  const allIssues: IssueNode[] = []
-
-  try {
-    // 读取data目录下的所有JSON文件
-    const files = fs.readdirSync(dataDir)
-    const jsonFiles = files.filter(
-      (file) => file.endsWith('.json') && file !== 'summary.json',
-    )
-
-    console.log(`找到 ${jsonFiles.length} 个月份数据文件`)
-
-    for (const file of jsonFiles) {
-      const filePath = path.join(dataDir, file)
-      const data = fs.readFileSync(filePath, 'utf-8')
-      const issues = JSON.parse(data)
-      allIssues.push(...issues)
-      console.log(`从 ${file} 读取了 ${issues.length} 条文案`)
-    }
-
-    console.log(`总共读取到 ${allIssues.length} 条文案`)
-    return allIssues
-  } catch (error) {
-    console.error('读取数据文件时出错:', error)
-    return []
-  }
-}
-
-// 判断新的文案是否有相似的存在，如果有则返回相似的文案
+// 判断新的文案是否与 snapshot.sql 中的历史 issue 重复（图片 URL 精确匹配 + 文本相似）
+// 注：原 `imageHashes`（pHash）路径从未被填充，2026-05-20 随月份 JSON 一起退役。
 export async function findSimilarIssue(
   newIssue: string,
   currentIssueId?: string,
-): Promise<IssueNode | null> {
-  const issues = await fetchLocalIssues()
-  console.log(`从data.json中读取到 ${issues.length} 个文案`)
+): Promise<Pick<IssueNode, 'id' | 'title' | 'url' | 'body'> | null> {
+  const issues = await readSnapshotIssues()
+  console.log(`从 snapshot.sql 读取到 ${issues.length} 个历史文案`)
 
   const newIssueImages = extractImageUrls(newIssue)
   const hasNewImage = newIssueImages.length > 0
   const newIssueText = extractText(newIssue)
 
-  // 如果新提交包含图片，先计算图片哈希
-  let newImageHashes: string[] = []
-  if (hasNewImage) {
-    console.log(`新提交包含 ${newIssueImages.length} 张图片，开始计算哈希...`)
-    const hashResults = await calculateImageHashes(newIssueImages)
-    newImageHashes = hashResults.map(h => h.hash)
-    console.log(`图片哈希计算完成: ${newImageHashes.join(', ')}`)
-  }
-
   for (let i = 0; i < issues.length; i++) {
     const issue = issues[i]
 
-    // 如果提供了当前issue ID，则跳过自身
     if (currentIssueId && issue.id === currentIssueId) {
-      console.log(`跳过当前issue ID: ${currentIssueId}`)
+      console.log(`跳过当前 issue ID: ${currentIssueId}`)
       continue
     }
 
-    // 1. 图片相似性检查
-    if (hasNewImage && issue.imageHashes && issue.imageHashes.length > 0) {
-      for (const newHash of newImageHashes) {
-        for (const existingHash of issue.imageHashes!) {
-          if (isImageSimilar(newHash, existingHash)) {
-            console.log(`在第 ${i + 1} 个文案中找到相似图片: ${issue.title}`)
-            console.log(`新图哈希: ${newHash}, 相似图哈希: ${existingHash}, 汉明距离: ${hammingDistance(newHash, existingHash)}`)
-            return issue
-          }
-        }
-      }
-    }
-
-    // 2. URL 精确匹配检查（快速路径）
+    // 1. 图片 URL 精确匹配
     if (hasNewImage) {
       const existingImages = extractImageUrls(issue.body)
       for (const newUrl of newIssueImages) {
         if (existingImages.includes(newUrl)) {
-          console.log(`在第 ${i + 1} 个文案中找到相同图片URL: ${issue.title}`)
+          console.log(`在第 ${i + 1} 个文案中找到相同图片 URL: ${issue.title}`)
           return issue
         }
       }
     }
 
-    // 3. 文本相似性检查（仅当两者都有文本内容时）
+    // 2. 文本相似性（两者都有文本时）
     const existingText = extractText(issue.body)
-    if (newIssueText && existingText) {
-      const similarity = isSimilar(existingText, newIssueText)
-      if (similarity) {
-        console.log(`在第 ${i + 1} 个文案中找到相似文本: ${issue.title}`)
-        return issue
-      }
+    if (newIssueText && existingText && isSimilar(existingText, newIssueText)) {
+      console.log(`在第 ${i + 1} 个文案中找到相似文本: ${issue.title}`)
+      return issue
     }
   }
 
