@@ -1,5 +1,6 @@
 import { fetchIssues } from "./utils/fetchIssues";
 import { tagContent, computeTagHash } from './tagger'
+import { generateSnapshotSql } from './generateSnapshotSql'
 import core from "@actions/core";
 import fs from "fs";
 import path from "path";
@@ -177,6 +178,12 @@ async function createData() {
     // 直接记录文件的绝对路径
     changedFiles.push(filePath)
   }
+
+  // 生成 SQL 快照（供 vme-app SqlSnapshotProvider 装载，兑现架构 §5「无正文索引 + 正文按需」）
+  const snapshotSqlPath = path.join(dataDir, 'snapshot.sql')
+  fs.writeFileSync(snapshotSqlPath, generateSnapshotSql(data))
+  console.log(`SQL 快照已写入: ${snapshotSqlPath}`)
+  changedFiles.push(snapshotSqlPath)
 
   // 提交到仓库
   execSync('git config --global user.name github-actions[bot]')
