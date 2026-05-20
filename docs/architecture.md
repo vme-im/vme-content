@@ -25,6 +25,9 @@
 | 2026-05-20 | **A5 完成：拆旧打标路径（线上验证）** | 删 `/api/classify`、`ClassifyTrigger`、single-sync `analyzeContent`、随之无引用的 `lib/sync/content-analyzer`；详情页改为静态渲染快照 `joke.tags`（原 UI 保留）。净 -441 行、tsc/21 测试过、全仓无残引用；线上 vme.im：详情页静态标签正常、`POST /api/classify`→404、items=278 各端点 200 无回归。`/api/sync` 与 Neon 写本身留 Phase C |
 | 2026-05-20 | **Phase C 完成：Neon 在线写入退役 + 抗腐烂时限清零（线上验证）** | **C1** Node→24（actions_scripts volta 24.13.0 清 eslint EBADENGINE；3 workflow setup-node@24 + `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`，Node20 弃用警告→0，create_data CI 绿/278）。**C2** 机审切断 `syncIssueToApp`/`SYNC_API_*`，syncClient 精简为纯映射（dist 重建并清孤儿 chunk）。**C3** 删 vme-app `/api/sync` + `lib/sync` 全层 + `/api/status` 去 sync_logs + Dashboard 去 SyncLogsTable + vercel cron 移除（净 -1246 行）；线上 `/api/status` 200 且无 syncLogs、`/api/sync`→404、items=278、各页 200 无回归。**C4** 核实点赞/like 路由零 Neon 依赖（GitHubService 直连，决策 A 成立）。Neon 仅余 `NeonProvider` 应急回退（`DATA_PROVIDER=neon`，非默认） |
 | 2026-05-20 | **作者详情页上线**：新增 `/authors/[username]`，全站作者头像+名链至作者页 | 纯增量、零新依赖：复用 SnapshotProvider in-memory `author` 过滤（去库时已单测覆盖）+ `JokesList`/`Card`/`Pagination`；作者头像 hero 复用快照里现成 `author.avatarUrl`，避免 `github.com/{user}.png` 302 redirect。链接覆盖：段子卡片、英雄榜前三甲+4–10名、详情页；首页头条/精选作者**刻意不链**（外层已是包裹整块的 joke `<Link>`，嵌套锚点违规）。线上 vme.im 实测：`/authors/zkl2333` 200 含 hero/列表/分页、`?page=2` 200、不存在作者 404；列表/榜单各 10 个 `/authors/` href、详情页 2 个；首页/jokes/leaderboard/detail 全 200 无回归 |
+| 2026-05-20 | **R2 快照通道取消**（原 follow-up 注销） | 性能落差实测仅 ~200ms cold（snapshot.sql 拉 git ~550ms vs 拉 R2 `.db` ~350ms），在 sql.js 已让 cold 从 1100ms→500ms 的基础上边际收益小；保留则架构挂个常年 TODO + 双源管理负担。决定以 git `data/snapshot.sql` 作快照唯一通道。**澄清**：取消的是「快照产物走 R2」这条 follow-up，**梗图上传（vme-app `/api/image-upload`）走 R2 保持不变**（账户/凭据/`r2.vme.im` 域名仍用）。未来真要重新引入按新决策处理 |
+| 2026-05-20 | **读模型默认切 `SqlSnapshotProvider`**（兑现 §5「无正文索引 + 正文按需」承诺，线上验证） | vme-content `actions_scripts` 加 `generateSnapshotSql.ts`，createData 产 `data/snapshot.sql`（210KB / 1642 行 / items + item_tags 两表 + 4 索引 / 稳定排序 diff 干净 / 单测 10 个 case 覆盖 escape/排序/确定性）。vme-app 加 `SqlSnapshotProvider implements DataProvider`：sql.js 装载 + 模块单例 + 5min TTL + graceful-degrade（17 个单测全过）；`outputFileTracingIncludes: { '/**': ['sql-wasm.wasm'] }` 强制 wasm 进所有 lambda。`getDataProvider()` 默认切，降级梯队 `DATA_PROVIDER=snapshot\|neon`。**实测**：spike #4 测 cold init_sqljs 29ms/build_db 60-100ms/query 0.5ms；线上 vme.im 全路径 200 无回归（jokes/text/meme/tag=恋爱/作者页 hero=125/详情页/榜单/api/status 数据全一致），warm ~470ms。`/jokes/[id]` 在 preview 500 是 preview env 缺 `NEXTAUTH_SECRET` 的 pre-existing 配置问题，与 SqlSnapshotProvider 无关 |
+| 2026-05-20 | **actions_scripts 去 rollup，改用 tsx 直接跑 .ts**（顺手清理） | rollup 打 bundle + 提交 dist/ 中间产物双重成本（dist 历史 27k 行 chunk + 孤儿 chunk 风险 + 每次改 src/ 需 rollup -c），换 tsx 后零代码改 + 移除 5 个 devDeps（rollup/rimraf/3 个 @rollup plugin）+ 删 32k 行净。3 个 workflow（create_data/issue_moderation/manual_moderation）`node dist/X.js` → `npx tsx src/X.ts`；create_data 加 setup-node cache + npm ci 步骤。create_data CI 绿、产出 snapshot.sql 与 rollup 路径**字节完全一致**（同份 generateSnapshotSql.ts，稳定排序 → 确定性达成）|
 
 > **更正（2026-05-19）**：早期讨论曾称产物落点为「S3」。经核对代码（`src/app/api/image-upload/route.ts` 用 `@aws-sdk/client-s3` 指向 `*.r2.cloudflarestorage.com`，`.env.local.example` 仅有 `R2_*` 凭据），实为 **Cloudflare R2**。架构不变，仅正名并升级成本结论：R2 永久免费额度 + 零 egress，此规模长期实际 $0，且不再有 AWS「12 个月免费额度到期转收费」那条腐烂风险。
 
@@ -75,10 +78,10 @@
 
 - **真相**：GitHub Issues，不额外存。
 - **tag 缓存**：小 git 文件（**已定，不回写 Issue 标签**），`tagHash = sha256(tagPromptVersion + "\n" + preprocess(title,body))`；上一版快照即缓存，命中则不调 LLM；`tagPromptVersion` bump 即全量重打标。
-- **查询读模型**（替代 Neon 的读职责）：**无正文紧凑索引**（id/title/author/createdAt/reactionsCount/contentType/tags，~150B/条）服务端内存排序筛选分页搜索；**正文按需**取（per-item / per-page）。任何环节都不加载整包。
+- **查询读模型**（替代 Neon 的读职责）：**`SqlSnapshotProvider` 装载 `data/snapshot.sql`**（已上线，见 §0 2026-05-20 决策）——SQLite 两表（`items` 无正文索引列 + `item_tags` 正规化）+ 4 索引（author/type/created_at/reactions），所有过滤维度走索引；正文与索引同表存放（一次装载，正文按 SQL `WHERE id=?` 按需取），契合「无正文索引 + 正文按需」承诺。原文「服务端内存排序筛选分页搜索」由 SQL 表达替代；`SnapshotProvider`（拉 month JSON）保留作 `DATA_PROVIDER=snapshot` 应急回退。
 - **summary**：与索引**同一次 createData、同一内存数组原子生成**的预聚合（totalItems/contributors/months/topTags/版本号），统计零扫描，杜绝多文件漂移。
-- **产物落点**：**Cloudflare R2（已定）**（代码经 `@aws-sdk/client-s3` 接 R2，与现有梗图上传同账户/凭据，实施时建议独立 bucket/前缀）——覆盖式写、强缓存头；不入 git；git 只留小 tag 缓存。R2 永久免费额度 + 零 egress，此规模长期实际 $0。
-- **稳定排序**：数组按 `createdAt ASC, id ASC` 固定后写出，保证（git 中 tag 缓存的）diff 干净。
+- **产物落点**：**git（`vme-im/vme-content/data/snapshot.sql`，210KB）**——稳定排序 INSERT 文本、diff 可审计、git pack 友好；vme-app 通过 `raw.githubusercontent` 拉。~~R2~~ 已取消（见 §0 2026-05-20 决策；梗图上传仍走 R2 不变）。
+- **稳定排序**：snapshot.sql 按 `items.id ASC` + `item_tags (item_id, tag) ASC` 固定后写出，保证 git diff 干净（数据无变动则 SQL 字节完全一致）。
 
 ## 6. 关键流程结论
 
