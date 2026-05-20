@@ -6,9 +6,10 @@
 //   付费只花一次；bump TAG_PROMPT_VERSION 即全量重打标。
 // - 失败/无 key/纯图/过短一律回退空标签，绝不抛出——打标永不阻塞数据管线。
 //
-// 注：此处的 TONE/THEME/STYLE 标签体系与提示词，是从 vme-app 的
+// 注：此处的 TONE/THEME/STYLE 标签体系与提示词，最初是从 vme-app 的
 // src/lib/sync/content-analyzer.ts + src/lib/tags/taxonomy.ts 移植而来。
-// 这是 Phase A 的过渡性重复：A5 会移除 vme-app 侧的打标路径，届时本文件为唯一来源。
+// 2026-05-20 A5 完成后 vme-app 侧打标路径（含 content-analyzer.ts）已删除，
+// 本文件是 vme 项目的唯一标签真相来源。
 
 import { createHash } from 'node:crypto'
 
