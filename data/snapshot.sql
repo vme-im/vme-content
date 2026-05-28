@@ -888,6 +888,11 @@ INSERT INTO items VALUES ('I_kwDOLrzjj87ZWa_v','真的能吃到肯德基吗','�
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABASG3pw','群主，你群都开了，你再开个公司呗，我们去你公司上班儿，每月给我开5万，做1休6，七险一金，每次上班4分钟，再免费送我一辆保时捷呗，对了我饿了，再去给我炒俩菜，外加一杯奶茶，还有今天星期四，我想吃kfc','群主，你群都开了，你再开个公司呗，我们去你公司上班儿，每月给我开5万，做1休6，七险一金，每次上班4分钟，再免费送我一辆保时捷呗，对了我饿了，再去给我炒俩菜，外加一杯奶茶，还有今天星期四，我想吃kfc','YoinSama',1776925266000,0,'text','e35a85e2abc906e4e99feae9a5536f3237901c3d88177e72e1dfe58960b9f04a','https://github.com/vme-im/vme-content/issues/188');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABC9kUIQ','还是分手了','还是分手了 ，谢谢大家。今天是2026年5月21日，我们最终和平分手，其实从朋友到恋人我们发生了挺多事情，能走到一起也是很不容易。我喜欢你，很喜欢你，也想和你幼稚。对啊，我总问我自己为什么还能坚持，可能没有答案，我没有备胎，也不玩暧昧，我所有的脾气爱笑爱哭都给了你，我能为你做的最后一件事竟然是走出你的人生。我一点都不后悔，更谢谢你教会我成长。 我也不知道这是谁写的，挺感动的我就复制下来了，看到这里说明你很在乎我，能v我50吗','zkl2333',1779359159000,0,'text','185002bbe8f5aa9ac09257cc61741872c7c0016f6070067a4ee586cc31c49e61','https://github.com/vme-im/vme-content/issues/190');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABCruIMQ','群重要通知','群重要通知：明天520本群将会为各位单身群员分配对象，因群主太忙，临时有事，我是小助手1号 ，负责女生。现在女生都加我好友，给我发一下朋友圈没有的美照，我好统计一下人数，男生暂时不用加，等群里通知','zkl2333',1779172855000,0,'text','09b89bc2b37c10e025e871f0e29d18ac4c3390e46aa90ed31d61a910fe8c30bb','https://github.com/vme-im/vme-content/issues/189');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABDnX6xw','关于瓜条回应','关于瓜条回应
+1:我事先并知不‬道你有对象。不在存‬知三当三
+2:小群截图的聊记天‬录是和我‬你谈之前。
+3:你送我的东西我没都‬收，谈不上圈ok？
+4:说到四，今天疯狂星期四，v我50','zkl2333',1779939980000,0,'text','6b208695520ab7de4217090c59702a637b21b0fdb112f4d147e251124cce3539','https://github.com/vme-im/vme-content/issues/192');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1645,4 +1650,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABC9kUIQ','治愈');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABCruIMQ','群聊');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABCruIMQ','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABCruIMQ','通知');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnX6xw','八卦');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnX6xw','对话');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnX6xw','恋爱');
 COMMIT;
