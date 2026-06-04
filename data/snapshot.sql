@@ -894,6 +894,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABDnX6xw','关于瓜条回应','关�
 3:你送我的东西我没都‬收，谈不上圈ok？
 4:说到四，今天疯狂星期四，v我50','zkl2333',1779939980000,0,'text','6b208695520ab7de4217090c59702a637b21b0fdb112f4d147e251124cce3539','https://github.com/vme-im/vme-content/issues/192');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABDnZPhA','接下周日高考代考','接下周日高考代考，物化生优先，88r包上清华，考不上退你38r，留50辛苦费。','zkl2333',1779940302000,0,'text','f75254808186a02b304c2f8779e37424817b35f399897a8dac284d7a46e53670','https://github.com/vme-im/vme-content/issues/193');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWDhbg','接济','宝宝我放弃高考了，考个试把我跟你的关系都搞淡了。还得是你对我最好，但是就以后吃饭需要你接济一下，今天先接济 50 元','KiritaniAyaka',1780555904000,0,'text','67fd98be3abcbd561175e60995379cbcf1e0068e23f222685f8853bee3e392b1','https://github.com/vme-im/vme-content/issues/194');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1657,4 +1658,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnX6xw','恋爱');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnZPhA','校园');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnZPhA','考试');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABDnZPhA','黑色幽默');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABEWDhbg','卑微');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABEWDhbg','心酸');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABEWDhbg','恋爱');
 COMMIT;
