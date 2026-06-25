@@ -897,6 +897,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABDnZPhA','接下周日高考代考',
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWDhbg','接济','宝宝我放弃高考了，考个试把我跟你的关系都搞淡了。还得是你对我最好，但是就以后吃饭需要你接济一下，今天先接济 50 元','KiritaniAyaka',1780555904000,0,'text','67fd98be3abcbd561175e60995379cbcf1e0068e23f222685f8853bee3e392b1','https://github.com/vme-im/vme-content/issues/194');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWErtA','家人们，我放弃高考了','家人们，我放弃高考了，以后全职跟你们聊天了，考个试把我跟大家关系都搞淡了。真交友还得是咱们网上这群兄弟姐妹，但是就以后吃饭需要大家接济一下，今天先接济50元','zkl2333',1780556090000,1,'text','046386f4b704df648870eb69f07b962a2f9bc8e6f90517ea85afc25b4a1cac10','https://github.com/vme-im/vme-content/issues/195');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFH6mQg','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','zkl2333',1781167545000,0,'text','072db526d00951ccf7479f1b7dfc4a96470a922b08a33762a5a6e8391ef5e86d','https://github.com/vme-im/vme-content/issues/197');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABGpBljQ','您好，我是清华招生办的','您好，我是清华招生办的。您的高考成绩已屏蔽，您的分数为749，因为有国补优惠和618大促，满700-500，您的成绩为249。请凭此去大专报到。其中报名费50，请提交交给我，谢谢。','zkl2333',1782361834000,0,'text','23541f3ce72137d5c5c6adc2d374a3c100d5ebaded937e5034b7a740096cc94e','https://github.com/vme-im/vme-content/issues/199');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1669,4 +1670,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABEWErtA','自嘲');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABFH6mQg','群聊');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABFH6mQg','自嘲');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABFH6mQg','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','讽刺');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','黑色幽默');
 COMMIT;
