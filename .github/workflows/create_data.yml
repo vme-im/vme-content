@@ -34,3 +34,9 @@ jobs:
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
           AI_API_BASE_URL: ${{ vars.AI_API_BASE_URL }}
           LLM_MODEL: ${{ vars.LLM_MODEL }}
+      - name: 刷新 jsDelivr 缓存
+        # vme-app 生产走 jsDelivr CDN 拉 snapshot.sql，@main 默认 12h 缓存；
+        # push 完主动 purge 一次，秒级生效。无 push 时打同 URL 也是幂等的
+        if: always()
+        run: |
+          curl -sS -m 10 "https://purge.jsdelivr.net/gh/vme-im/vme-content@main/data/snapshot.sql" || true
