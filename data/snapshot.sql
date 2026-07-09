@@ -900,6 +900,8 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABF3NPOA','618星期四','今天618�
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFF03Rg','V我50','呼！高考终于结束了，有人介绍我去打暑假工体验生活，但无奈囊中羞涩，就差50买车票，能赞助点吗，声明一下：我不是去开封菜馆','jiaojia00',1781144352000,0,'text','75715b8d11d8fef1e592bd37a18fe993699df40ae8fddb716ef583c531a0c971','https://github.com/vme-im/vme-content/issues/196');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFH6mQg','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','zkl2333',1781167545000,0,'text','072db526d00951ccf7479f1b7dfc4a96470a922b08a33762a5a6e8391ef5e86d','https://github.com/vme-im/vme-content/issues/197');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABGpBljQ','您好，我是清华招生办的','您好，我是清华招生办的。您的高考成绩已屏蔽，您的分数为749，因为有国补优惠和618大促，满700-500，您的成绩为249。请凭此去大专报到。其中报名费50，请提交交给我，谢谢。','zkl2333',1782361834000,0,'text','23541f3ce72137d5c5c6adc2d374a3c100d5ebaded937e5034b7a740096cc94e','https://github.com/vme-im/vme-content/issues/199');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIKztNw','人事部通知','人事部通知:
+由于台风巴威即将来袭，伴随暴雨，天气恶劣，气象台发布暴雨红色预警信号，考虑到群内积水和群主出行安全，本群经研究下达以下通知：所有人今天交50元台风保险给我','zkl2333',1783571243000,0,'text','28a229b3e8b752a1730225079c6daa26064d87e44c9af6697b8a4a47b7863d40','https://github.com/vme-im/vme-content/issues/201');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1680,4 +1682,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABFH6mQg','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','讽刺');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','黑色幽默');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','群聊');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','通知');
 COMMIT;
