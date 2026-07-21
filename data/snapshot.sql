@@ -895,13 +895,15 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABDnX6xw','关于瓜条回应','关�
 4:说到四，今天疯狂星期四，v我50','zkl2333',1779939980000,0,'text','6b208695520ab7de4217090c59702a637b21b0fdb112f4d147e251124cce3539','https://github.com/vme-im/vme-content/issues/192');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABDnZPhA','接下周日高考代考','接下周日高考代考，物化生优先，88r包上清华，考不上退你38r，留50辛苦费。','zkl2333',1779940302000,0,'text','f75254808186a02b304c2f8779e37424817b35f399897a8dac284d7a46e53670','https://github.com/vme-im/vme-content/issues/193');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWDhbg','接济','宝宝我放弃高考了，考个试把我跟你的关系都搞淡了。还得是你对我最好，但是就以后吃饭需要你接济一下，今天先接济 50 元','KiritaniAyaka',1780555904000,0,'text','67fd98be3abcbd561175e60995379cbcf1e0068e23f222685f8853bee3e392b1','https://github.com/vme-im/vme-content/issues/194');
-INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWErtA','家人们，我放弃高考了','家人们，我放弃高考了，以后全职跟你们聊天了，考个试把我跟大家关系都搞淡了。真交友还得是咱们网上这群兄弟姐妹，但是就以后吃饭需要大家接济一下，今天先接济50元','zkl2333',1780556090000,1,'text','046386f4b704df648870eb69f07b962a2f9bc8e6f90517ea85afc25b4a1cac10','https://github.com/vme-im/vme-content/issues/195');
-INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABF3NPOA','618星期四','今天618，优惠券就别发了，直接V我50吧，今天星期四，刚好够吃一顿','jiaojia00',1781746560000,1,'text','7e312ec9f95d56e1af1854590c23377c2be1cd468d6b735e69991be702bb077f','https://github.com/vme-im/vme-content/issues/198');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWErtA','家人们，我放弃高考了','家人们，我放弃高考了，以后全职跟你们聊天了，考个试把我跟大家关系都搞淡了。真交友还得是咱们网上这群兄弟姐妹，但是就以后吃饭需要大家接济一下，今天先接济50元','zkl2333',1780556090000,2,'text','046386f4b704df648870eb69f07b962a2f9bc8e6f90517ea85afc25b4a1cac10','https://github.com/vme-im/vme-content/issues/195');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABF3NPOA','618星期四','今天618，优惠券就别发了，直接V我50吧，今天星期四，刚好够吃一顿','jiaojia00',1781746560000,0,'text','7e312ec9f95d56e1af1854590c23377c2be1cd468d6b735e69991be702bb077f','https://github.com/vme-im/vme-content/issues/198');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFF03Rg','V我50','呼！高考终于结束了，有人介绍我去打暑假工体验生活，但无奈囊中羞涩，就差50买车票，能赞助点吗，声明一下：我不是去开封菜馆','jiaojia00',1781144352000,0,'text','75715b8d11d8fef1e592bd37a18fe993699df40ae8fddb716ef583c531a0c971','https://github.com/vme-im/vme-content/issues/196');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFH6mQg','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','zkl2333',1781167545000,0,'text','072db526d00951ccf7479f1b7dfc4a96470a922b08a33762a5a6e8391ef5e86d','https://github.com/vme-im/vme-content/issues/197');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABGpBljQ','您好，我是清华招生办的','您好，我是清华招生办的。您的高考成绩已屏蔽，您的分数为749，因为有国补优惠和618大促，满700-500，您的成绩为249。请凭此去大专报到。其中报名费50，请提交交给我，谢谢。','zkl2333',1782361834000,0,'text','23541f3ce72137d5c5c6adc2d374a3c100d5ebaded937e5034b7a740096cc94e','https://github.com/vme-im/vme-content/issues/199');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIKztNw','人事部通知','人事部通知:
 由于台风巴威即将来袭，伴随暴雨，天气恶劣，气象台发布暴雨红色预警信号，考虑到群内积水和群主出行安全，本群经研究下达以下通知：所有人今天交50元台风保险给我','zkl2333',1783571243000,0,'text','28a229b3e8b752a1730225079c6daa26064d87e44c9af6697b8a4a47b7863d40','https://github.com/vme-im/vme-content/issues/201');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIuNH0w','今天是什么日子？','你知道今天是什么日子吗？
+是国际冰壶日，是周杰伦日，更是请我吃疯狂星期四的日子！','jiaojia00',1784008668000,0,'text','fa6baea63530a5390da20cb8076cc4261b4b538e6fb0d74ee365a941a695494c','https://github.com/vme-im/vme-content/issues/202');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1685,4 +1687,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABGpBljQ','黑色幽默');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','群聊');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','通知');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','排比');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','追星');
 COMMIT;
