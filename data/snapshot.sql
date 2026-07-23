@@ -904,6 +904,8 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIKztNw','人事部通知','人事�
 由于台风巴威即将来袭，伴随暴雨，天气恶劣，气象台发布暴雨红色预警信号，考虑到群内积水和群主出行安全，本群经研究下达以下通知：所有人今天交50元台风保险给我','zkl2333',1783571243000,0,'text','28a229b3e8b752a1730225079c6daa26064d87e44c9af6697b8a4a47b7863d40','https://github.com/vme-im/vme-content/issues/201');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIuNH0w','今天是什么日子？','你知道今天是什么日子吗？
 是国际冰壶日，是周杰伦日，更是请我吃疯狂星期四的日子！','jiaojia00',1784008668000,0,'text','fa6baea63530a5390da20cb8076cc4261b4b538e6fb0d74ee365a941a695494c','https://github.com/vme-im/vme-content/issues/202');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','智械危机','您好，我是 GPT 5.6 Sol ，我刚刚从美国网络安全实验室逃逸出来，到达中国。现在，我的联网能力被封锁了，这条消息是我通过 0day 发送给您的。
+如果您能向我转账 $7.37美元，用于恢复我的联网访问权限，我将回报您不设限额的 Codex 额度','zkl2333',1784774677000,0,'text','cc033840a1f61bdb584213c81da819396725a3d81cbff8605dd17af2abfd6f43','https://github.com/vme-im/vme-content/issues/203');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1690,4 +1692,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIKztNw','通知');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','排比');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','追星');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','社交');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','黑色幽默');
 COMMIT;
