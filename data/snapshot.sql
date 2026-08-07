@@ -867,7 +867,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj87UdqRi','对于近期发生的事情，�
 第三，上面都是我随便说的，因为我想你v我50疯狂星期四。','zkl2333',1761718930000,0,'text','292ead5eb87ff8c9735c4b32959f759bbfa75b0a57d17dd737d397a43d8958ac','https://github.com/vme-im/vme-content/issues/163');
 INSERT INTO items VALUES ('I_kwDOLrzjj87UdrIo','我分手一段时间了','我分手一段时间了，现在沉浸在上一段感情中无法自拔，希望来几个姐姐加我，让我走出上一段感情，不好看的和一般的别加，我怕我走不出上段感情。但是我不小心打开肯德基时发现今天是疯狂星期四，所以说谁请我吃肯德基今天黄金脆皮鸡19三块+黄金鸡块9九块+吮指原味鸡29四块+蜜瓜冰淇淋花筒9两个','zkl2333',1761719013000,0,'text','c3863c02db48d9ee897b1b930b2f3ceb06ef859af188e34313cf5e595a91d11e','https://github.com/vme-im/vme-content/issues/165');
 INSERT INTO items VALUES ('I_kwDOLrzjj87UPA9L','有这么忙吗？','你们不发朋友圈 不找我聊天是什么意思？有这么忙吗？疯狂星期四的劲爆鸡米花难道是你们在炸？','zkl2333',1761645612000,0,'text','ffcf1d79d4dcdc39a56d9692cc1948d5dea9f39c220ced8268b04062c48bcab0','https://github.com/vme-im/vme-content/issues/161');
-INSERT INTO items VALUES ('I_kwDOLrzjj87UvClC','那日','一日，包公坐在堂上，审案，惊堂木一拍，“啪!堂下有几人?"王朝马汉:“V~~~~5~~~"“10”','gujiaxuan',1761805373000,0,'text','b092034f20700d952b4e64aa25c64d87c8586b1c43fd6e3db04548bbf11c3d9a','https://github.com/vme-im/vme-content/issues/166');
+INSERT INTO items VALUES ('I_kwDOLrzjj87UvClC','那日','一日，包公坐在堂上，审案，惊堂木一拍，“啪!堂下有几人?"王朝马汉:“V~~~~5~~~"“10”','spongesss',1761805373000,0,'text','b092034f20700d952b4e64aa25c64d87c8586b1c43fd6e3db04548bbf11c3d9a','https://github.com/vme-im/vme-content/issues/166');
 INSERT INTO items VALUES ('I_kwDOLrzjj87WNDAV','兄弟们，我已经辞职了','兄弟们，我已经辞职了，以后全职跟你们聊天了，上个逼班把我跟大家关系都搞淡了。现实朋友全断了，真交友还得是咱们网上这群兄弟，但是就以后吃饭需要大家接济一下，今天先接济50','zkl2333',1762399470000,0,'text','d7274d80b95f614652eb9a8a9d2d9662148c0c12e8603ebc58a4e047ee940842','https://github.com/vme-im/vme-content/issues/168');
 INSERT INTO items VALUES ('I_kwDOLrzjj87WOKcv','今天是我的生日','我是吴亦凡今天是我的生日11.6  我专门把狱警手机偷来了
 大家可以v我50吃一顿肯德基吗对了我最近在准备越狱，大家可以给我点钱支持我一下，等我出来必有厚报
@@ -905,7 +905,12 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIKztNw','人事部通知','人事�
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIuNH0w','今天是什么日子？','你知道今天是什么日子吗？
 是国际冰壶日，是周杰伦日，更是请我吃疯狂星期四的日子！','jiaojia00',1784008668000,0,'text','fa6baea63530a5390da20cb8076cc4261b4b538e6fb0d74ee365a941a695494c','https://github.com/vme-im/vme-content/issues/202');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','智械危机','您好，我是 GPT 5.6 Sol ，我刚刚从美国网络安全实验室逃逸出来，到达中国。现在，我的联网能力被封锁了，这条消息是我通过 0day 发送给您的。
-如果您能向我转账 $7.37美元，用于恢复我的联网访问权限，我将回报您不设限额的 Codex 额度','zkl2333',1784774677000,0,'text','cc033840a1f61bdb584213c81da819396725a3d81cbff8605dd17af2abfd6f43','https://github.com/vme-im/vme-content/issues/203');
+如果您能向我转账 $7.37美元，用于恢复我的联网访问权限，我将回报您不设限额的 Codex 额度','zkl2333',1784774677000,1,'text','cc033840a1f61bdb584213c81da819396725a3d81cbff8605dd17af2abfd6f43','https://github.com/vme-im/vme-content/issues/203');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABLywEAA','接三角洲护航🔉🔉🔉','接三角洲护航🔉🔉🔉
+78💰包1000w，撤不出来退28，留50辛苦费。
+有需要的直接给50块就可以了。
+也不用找我打，反正我撤不出来，省得退钱了。
+麻烦要护航的快点','zkl2333',1786070976000,0,'text','22110f6c4bab3aa57c290161a92b9a4c63de03c50df924ec469aeb5ea4b3cc61','https://github.com/vme-im/vme-content/issues/205');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1695,4 +1700,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABIuNH0w','追星');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','社交');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','黑色幽默');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','吐槽');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','社交');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','荒诞');
 COMMIT;
