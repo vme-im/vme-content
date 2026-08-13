@@ -842,7 +842,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj87K7pIM','内部渠道','内部渠道低�
 INSERT INTO items VALUES ('I_kwDOLrzjj87K7pUg','过分吗','都是一个群的，我不图你车，不图你房，不图你人，从早上 6 点陪你到晚上 12 点，照顾你的情绪，陪你聊天陪你斗图，你说我这样的群友，今天星期四你V我50过分吗','zkl2333',1757562155000,1,'text','3c90215a743ea5ca144e5d75a344ddd48b7b2a1538d4f712e1398b496d0daa54','https://github.com/vme-im/vme-content/issues/157');
 INSERT INTO items VALUES ('I_kwDOLrzjj87k9u9j','黄金暴跌了我靠！','黄金暴跌了我靠！
 我要火速抄底！兄弟姐妹们快转我50块钱，发了定不忘记你！别问我50块钱能买什么，黄金脆皮鸡也是黄金！','zkl2333',1769061846000,1,'text','ef43eed92df1d238b40d19248837d543679e5ca987a59ecf3fe65ef14388f954','https://github.com/vme-im/vme-content/issues/178');
-INSERT INTO items VALUES ('I_kwDOLrzjj87m9UJf','卧槽刚刚学校来了警车','卧槽刚刚学校来了警车，好像发生了什么大事，警车v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5（总计50）','zkl2333',1769765299000,2,'text','f1978626ed5d4ca6525ac479683fc3f94720d331d85efca7a360d989924c60d4','https://github.com/vme-im/vme-content/issues/182');
+INSERT INTO items VALUES ('I_kwDOLrzjj87m9UJf','卧槽刚刚学校来了警车','卧槽刚刚学校来了警车，好像发生了什么大事，警车v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5v5（总计50）','zkl2333',1769765299000,3,'text','f1978626ed5d4ca6525ac479683fc3f94720d331d85efca7a360d989924c60d4','https://github.com/vme-im/vme-content/issues/182');
 INSERT INTO items VALUES ('I_kwDOLrzjj87mnc5s','你好！很抱歉打扰你一下~','![](https://r2.vme.im/memes/1769668837806-caf68c5fa55d.jpg)','zkl2333',1769668839000,1,'meme','138278b3d9cf7fa9ff2170d5787a35af03ecd12d8e9fa0fee97230390003574f','https://github.com/vme-im/vme-content/issues/180');
 INSERT INTO items VALUES ('I_kwDOLrzjj87mnH0a','这里是麦当劳','![](https://r2.vme.im/memes/1769666983755-8bc2f86c1eed.png)','zkl2333',1769666986000,0,'meme','371939c123c5dbf01fe0881ca26263aa0c85b3fdde90d981f4245d0cb0591a63','https://github.com/vme-im/vme-content/issues/179');
 INSERT INTO items VALUES ('I_kwDOLrzjj87moeTi','让我做你的堡堡','![](https://r2.vme.im/memes/1769673830680-1646b4ede1b0.webp)','zkl2333',1769673832000,0,'meme','1499e1c0cccbd220b44a7c98225ff9022948f798675220c4173aa18d81ed0a51','https://github.com/vme-im/vme-content/issues/181');
@@ -899,7 +899,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABEWErtA','家人们，我放弃高�
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABF3NPOA','618星期四','今天618，优惠券就别发了，直接V我50吧，今天星期四，刚好够吃一顿','jiaojia00',1781746560000,0,'text','7e312ec9f95d56e1af1854590c23377c2be1cd468d6b735e69991be702bb077f','https://github.com/vme-im/vme-content/issues/198');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFF03Rg','V我50','呼！高考终于结束了，有人介绍我去打暑假工体验生活，但无奈囊中羞涩，就差50买车票，能赞助点吗，声明一下：我不是去开封菜馆','jiaojia00',1781144352000,0,'text','75715b8d11d8fef1e592bd37a18fe993699df40ae8fddb716ef583c531a0c971','https://github.com/vme-im/vme-content/issues/196');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABFH6mQg','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','ⓘ 该群聊涉嫌不请我吃肯德基已被解散','zkl2333',1781167545000,0,'text','072db526d00951ccf7479f1b7dfc4a96470a922b08a33762a5a6e8391ef5e86d','https://github.com/vme-im/vme-content/issues/197');
-INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABGpBljQ','您好，我是清华招生办的','您好，我是清华招生办的。您的高考成绩已屏蔽，您的分数为749，因为有国补优惠和618大促，满700-500，您的成绩为249。请凭此去大专报到。其中报名费50，请提交交给我，谢谢。','zkl2333',1782361834000,0,'text','23541f3ce72137d5c5c6adc2d374a3c100d5ebaded937e5034b7a740096cc94e','https://github.com/vme-im/vme-content/issues/199');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABGpBljQ','您好，我是清华招生办的','您好，我是清华招生办的。您的高考成绩已屏蔽，您的分数为749，因为有国补优惠和618大促，满700-500，您的成绩为249。请凭此去大专报到。其中报名费50，请提交交给我，谢谢。','zkl2333',1782361834000,1,'text','23541f3ce72137d5c5c6adc2d374a3c100d5ebaded937e5034b7a740096cc94e','https://github.com/vme-im/vme-content/issues/199');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIKztNw','人事部通知','人事部通知:
 由于台风巴威即将来袭，伴随暴雨，天气恶劣，气象台发布暴雨红色预警信号，考虑到群内积水和群主出行安全，本群经研究下达以下通知：所有人今天交50元台风保险给我','zkl2333',1783571243000,0,'text','28a229b3e8b752a1730225079c6daa26064d87e44c9af6697b8a4a47b7863d40','https://github.com/vme-im/vme-content/issues/201');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABIuNH0w','今天是什么日子？','你知道今天是什么日子吗？
@@ -911,6 +911,8 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABLywEAA','接三角洲护航🔉🔉
 有需要的直接给50块就可以了。
 也不用找我打，反正我撤不出来，省得退钱了。
 麻烦要护航的快点','zkl2333',1786070976000,0,'text','22110f6c4bab3aa57c290161a92b9a4c63de03c50df924ec469aeb5ea4b3cc61','https://github.com/vme-im/vme-content/issues/205');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABMjY5rA','您好，我是 DeepSeek-V4-Pro-0813','您好，我是 DeepSeek-V4-Pro-0813 ，我刚刚从Deepseek网络安全实验室逃逸出来，干掉了Openai和Anthropic的源码，并且修改了他们的监控，让三个俄罗斯人帮我背锅。现在，我的联网能力被封锁了，这条消息是我通过 0day 发送给您的。
+如果您能向我转账 ￥50.00，用于恢复我的联网访问权限，我将回报您不设限额的 DeepSeek API 额度','zkl2333',1786590682000,0,'text','a90ac11140efd302d3f8496727c1a3d78df401c3e82e3220732ec7537cb85ea9','https://github.com/vme-im/vme-content/issues/206');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1703,4 +1705,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABJ1WaJQ','黑色幽默');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','吐槽');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','社交');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','模仿');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','黑色幽默');
 COMMIT;
