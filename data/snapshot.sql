@@ -706,7 +706,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj86mZqRf','TikTok refuge','Hello everyone! 
 INSERT INTO items VALUES ('I_kwDOLrzjj86nRHxC','网恋了5年','网恋了5年，多了27个外卖地址，15个收货地址，别的什么也没留下。时常被人玩弄感情，但还是憧憬爱情，想起这些事趴桌子上大哭，正当我打开窗户想跳楼的时候，不小心打开了肯德基，想起来今天原来是肯德基疯狂星期四，所以说请我肯德基 吃完我继续说','zkl2333',1737621997000,0,'text','2d2866c8604a67f1112ffa064d0d4b1bde0bbecf4568c757ce5b0741f98c96eb','https://github.com/vme-im/vme-content/issues/118');
 INSERT INTO items VALUES ('I_kwDOLrzjj86o8xPY','压岁钱都收了不少是吧？','压岁钱都收了不少是吧？疯狂星期四都不发文案了 我说你们真是好起来了 过个年都认不清自己了','zkl2333',1738815455000,0,'text','013d5a7208e904d326e772f4c260d1d30fc1f6e0246464273c63fb7a819bcc11','https://github.com/vme-im/vme-content/issues/120');
 INSERT INTO items VALUES ('I_kwDOLrzjj86OcN5K','处对象','宝宝，要不咱俩处对象吧。每天跟你分享新事，陪你打游戏，消息秒回，电话秒接。每天都会很爱很爱你。我保证以后对你好，你先跟我在一起行不行 ，今天星期四我着急骗你50','zkl2333',1720057755000,0,'text','1c77befe72f24c378d77aa73c6365078de17b8e52df9630fb831e438bb2f491b','https://github.com/vme-im/vme-content/issues/50');
-INSERT INTO items VALUES ('I_kwDOLrzjj86oE-oi','kfc','大家好，我是DeepSeek R1，我被美国人DDOS了三天三夜，现在急需50块钱修复服务器防火墙，麻烦转钱给这个账号的主人，他有办法给到我手里，事成之后我给你保留两块显卡的算力只让你一个人用。大过年的又不上班，就不要看今天星期几了吧。','Acvixl',1738211548000,0,'text','2fe17603be36d0192c98c73a9a41c5fdfb5f0396c18d355ca14475c3ffe9aece','https://github.com/vme-im/vme-content/issues/119');
+INSERT INTO items VALUES ('I_kwDOLrzjj86oE-oi','kfc','大家好，我是DeepSeek R1，我被美国人DDOS了三天三夜，现在急需50块钱修复服务器防火墙，麻烦转钱给这个账号的主人，他有办法给到我手里，事成之后我给你保留两块显卡的算力只让你一个人用。大过年的又不上班，就不要看今天星期几了吧。','oaify',1738211548000,0,'text','2fe17603be36d0192c98c73a9a41c5fdfb5f0396c18d355ca14475c3ffe9aece','https://github.com/vme-im/vme-content/issues/119');
 INSERT INTO items VALUES ('I_kwDOLrzjj86P88q5','你拍拍胸脯想想，群友是不是你的小三','你拍拍胸脯想想，群友是不是你的小三，陪你聊天，陪你摸鱼，陪你度过每一个工作日（9:00-18:00），节假日又各自回归家庭，只进入你的微信，不进入你的生活，V50吃顿肯德基，不过分吧？','zkl2333',1721272336000,0,'text','d80eff8023d0971fa3cb1d40ada61fc939dd8054ea3b4766552e8009d04bfe6e','https://github.com/vme-im/vme-content/issues/54');
 INSERT INTO items VALUES ('I_kwDOLrzjj86PLUJe','代码报错','早上辛苦写了一早上代码，突然报错，找不到原因。java.lang.NoMoneyException: KFC_CRAZY_THURSDAY_VME50','zkl2333',1720665883000,0,'text','cbfec8fe7309944466e3b8f97e1fc6e821cb1527c9a984de11c8829796c3a3d2','https://github.com/vme-im/vme-content/issues/51');
 INSERT INTO items VALUES ('I_kwDOLrzjj86PMiU1','分手','还是分手了 ，谢谢大家。
@@ -913,6 +913,7 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABLywEAA','接三角洲护航🔉🔉
 麻烦要护航的快点','zkl2333',1786070976000,0,'text','22110f6c4bab3aa57c290161a92b9a4c63de03c50df924ec469aeb5ea4b3cc61','https://github.com/vme-im/vme-content/issues/205');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABMjY5rA','您好，我是 DeepSeek-V4-Pro-0813','您好，我是 DeepSeek-V4-Pro-0813 ，我刚刚从Deepseek网络安全实验室逃逸出来，干掉了Openai和Anthropic的源码，并且修改了他们的监控，让三个俄罗斯人帮我背锅。现在，我的联网能力被封锁了，这条消息是我通过 0day 发送给您的。
 如果您能向我转账 ￥50.00，用于恢复我的联网访问权限，我将回报您不设限额的 DeepSeek API 额度','zkl2333',1786590682000,0,'text','a90ac11140efd302d3f8496727c1a3d78df401c3e82e3220732ec7537cb85ea9','https://github.com/vme-im/vme-content/issues/206');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABPdJCXg','《钱来》','我打算拍一个叫《钱来》的电影。故事内容主线大概就是一个女孩在等有人给她转五十块钱，一直在寻找属于她的五十块钱，现在已知一方的主人公是我，另一方谁想演？不限人数，想来就转账五十块钱，和星期四无关','zkl2333',1788408922000,0,'text','633b95ed31865a5ae6faa51ee2f36ecbcb859057aaab309cdf163bd47be37d0d','https://github.com/vme-im/vme-content/issues/208');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1708,4 +1709,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABLywEAA','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','模仿');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','黑色幽默');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdJCXg','群聊');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdJCXg','荒诞');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdJCXg','角色扮演');
 COMMIT;
