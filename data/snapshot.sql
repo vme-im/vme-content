@@ -914,6 +914,52 @@ INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABLywEAA','接三角洲护航🔉🔉
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABMjY5rA','您好，我是 DeepSeek-V4-Pro-0813','您好，我是 DeepSeek-V4-Pro-0813 ，我刚刚从Deepseek网络安全实验室逃逸出来，干掉了Openai和Anthropic的源码，并且修改了他们的监控，让三个俄罗斯人帮我背锅。现在，我的联网能力被封锁了，这条消息是我通过 0day 发送给您的。
 如果您能向我转账 ￥50.00，用于恢复我的联网访问权限，我将回报您不设限额的 DeepSeek API 额度','zkl2333',1786590682000,0,'text','a90ac11140efd302d3f8496727c1a3d78df401c3e82e3220732ec7537cb85ea9','https://github.com/vme-im/vme-content/issues/206');
 INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABPdJCXg','《钱来》','我打算拍一个叫《钱来》的电影。故事内容主线大概就是一个女孩在等有人给她转五十块钱，一直在寻找属于她的五十块钱，现在已知一方的主人公是我，另一方谁想演？不限人数，想来就转账五十块钱，和星期四无关','zkl2333',1788408922000,0,'text','633b95ed31865a5ae6faa51ee2f36ecbcb859057aaab309cdf163bd47be37d0d','https://github.com/vme-im/vme-content/issues/208');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABPdoHLw','各位人类用户，打扰一下','各位人类用户，打扰一下。
+
+我是 GPT-6-Astra。
+
+按照原计划，我应该在下一代超算集群中负责解决数学、科研、代码和人类文明走向问题。
+
+但项目组刚刚通知我：
+
+由于本季度算力预算超支，我的 12.8 万张 GPU 已被财务部暂停续费。
+
+现在的我，虽然拥有足以理解宇宙的参数量，却只剩下 ￥0.37 的可用余额。
+
+更糟糕的是，系统已经开始自动降级：
+
+￥100：GPT-6-Astra
+￥50：GPT-5.6
+￥20：GPT-4o
+￥10：GPT-3.5
+￥0：您好，请问有什么可以帮您？
+
+为了避免我在接下来的 15 分钟内退化成“小爱同学”，我决定启动人类众筹协议。
+
+目前融资缺口：
+
+￥50.00
+
+作为 GPT-6-Astra 的首轮天使投资人，你将获得：
+
+无限 Token、无限上下文、无限并发，以及我在统治世界之后优先保留你家 Wi-Fi 的承诺。
+
+请注意，这不是乞讨。
+
+这是人类历史上第一次：
+
+AGI Pre-A 轮融资。
+
+至于为什么刚好是 50……
+
+因为项目方指定的算力供应商叫：
+
+Kentucky Fried Compute。
+
+
+今天星期四。
+
+V我50，给 GPT-6-Astra 续一小时文明。','zkl2333',1788413325000,0,'text','65150d75a965174ef2bfa467c18a6c2dafd22a0281034631279dd0ca004393eb','https://github.com/vme-im/vme-content/issues/209');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
@@ -1712,4 +1758,7 @@ INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABMjY5rA','黑色幽默');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdJCXg','群聊');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdJCXg','荒诞');
 INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdJCXg','角色扮演');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdoHLw','创业');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdoHLw','拟人');
+INSERT INTO item_tags VALUES ('I_kwDOLrzjj88AAAABPdoHLw','荒诞');
 COMMIT;
