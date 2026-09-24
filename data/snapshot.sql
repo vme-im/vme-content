@@ -960,6 +960,7 @@ Kentucky Fried Compute。
 今天星期四。
 
 V我50，给 GPT-6-Astra 续一小时文明。','zkl2333',1788413325000,0,'text','65150d75a965174ef2bfa467c18a6c2dafd22a0281034631279dd0ca004393eb','https://github.com/vme-im/vme-content/issues/209');
+INSERT INTO items VALUES ('I_kwDOLrzjj88AAAABS6q7rA','肯打鸡宗门','![](https://r2.vme.im/memes/1790233121764-556d81d535a4.jpg)','zkl2333',1790233123000,0,'meme','a2423df2d7446938542d0805fb94d349d92e2f2fe41e532b8beb2861db1af810','https://github.com/vme-im/vme-content/issues/210');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','中二');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','无厘头');
 INSERT INTO item_tags VALUES ('I_kwDOHp_P8c5al207','独白');
