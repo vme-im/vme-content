@@ -54,7 +54,7 @@ describe('moderationLogic', () => {
     })
 
     test('检测到违规内容', async () => {
-      // 模拟 Moderation API 返回违规结果
+      // 模拟 Moderation API 返回违规结果（分数超过阈值）
       ;(global.fetch as jest.Mock).mockResolvedValueOnce({
         json: jest.fn().mockResolvedValue({
           results: [
@@ -66,6 +66,12 @@ describe('moderationLogic', () => {
                 violence: false,
                 'self-harm': false,
               },
+              category_scores: {
+                hate: 0.95,
+                sexual: 0.01,
+                violence: 0.02,
+                'self-harm': 0.01,
+              },
             },
           ],
         }),
@@ -75,6 +81,63 @@ describe('moderationLogic', () => {
 
       expect(result.type).toBe('violation')
       expect(result.categories).toContain('仇恨')
+    })
+
+    test('OpenAI 标记但分数低于自定义阈值时不判违规（#211 玩梗误判回归）', async () => {
+      // #211 实测：violence=0.524 超过 OpenAI 内部阈值（flagged=true）但低于 0.7
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValue({
+          results: [
+            {
+              flagged: true,
+              categories: {
+                hate: false,
+                sexual: false,
+                violence: true,
+                'self-harm': false,
+              },
+              category_scores: {
+                hate: 0.02,
+                sexual: 0.01,
+                violence: 0.524,
+                'self-harm': 0.01,
+              },
+            },
+          ],
+        }),
+      })
+
+      const result = await moderateContent(1, '玩梗文案')
+
+      expect(result.type).toBe('approved')
+
+      // 不应打违规标签
+      const { addLabelsToIssue } = await import('./utils')
+      expect(addLabelsToIssue).not.toHaveBeenCalledWith(1, ['违规'])
+    })
+
+    test('多模态输入按类别取最高分判定（文本低分+图片高分→违规）', async () => {
+      ;(global.fetch as jest.Mock).mockResolvedValueOnce({
+        json: jest.fn().mockResolvedValue({
+          results: [
+            {
+              flagged: false,
+              categories: { violence: false },
+              category_scores: { violence: 0.3 },
+            },
+            {
+              flagged: true,
+              categories: { violence: true },
+              category_scores: { violence: 0.9 },
+            },
+          ],
+        }),
+      })
+
+      const result = await moderateContent(1, '文案\n![](https://example.com/meme.png)')
+
+      expect(result.type).toBe('violation')
+      expect(result.categories).toContain('暴力')
     })
 
     test('内容审核通过', async () => {
@@ -89,6 +152,12 @@ describe('moderationLogic', () => {
                 sexual: false,
                 violence: false,
                 'self-harm': false,
+              },
+              category_scores: {
+                hate: 0.02,
+                sexual: 0.01,
+                violence: 0.03,
+                'self-harm': 0.01,
               },
             },
           ],

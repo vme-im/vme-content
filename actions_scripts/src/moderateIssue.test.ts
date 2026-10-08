@@ -134,6 +134,12 @@ describe('moderateIssue', () => {
               violence: true,
               'self-harm': false,
             },
+            category_scores: {
+              hate: 0.02,
+              sexual: 0.01,
+              violence: 0.92,
+              'self-harm': 0.01,
+            },
           },
         ],
       })
@@ -146,36 +152,6 @@ describe('moderateIssue', () => {
       expect.stringContaining('不予收录'),
     )
     expect(closeIssue).toHaveBeenCalledWith(1)
-  })
-
-  it('当内容被标记并且没有准确的分类时，应该添加待审标签', async () => {
-    // 模拟issue没有任何审核标签
-    mockedGetIssueLabels.mockResolvedValueOnce([])
-
-    mockedFindSimilarIssue.mockResolvedValueOnce(null)
-    nock('https://aihubmix.com')
-      .post('/v1/moderations')
-      .reply(200, {
-        results: [
-          {
-            flagged: true,
-            categories: {
-              hate: false,
-              sexual: false,
-              violence: false,
-              'self-harm': false,
-            },
-          },
-        ],
-      })
-
-    await moderateIssue()
-
-    expect(addLabelsToIssue).toHaveBeenCalledWith(1, ['待审'])
-    expect(addCommentToIssue).toHaveBeenCalledWith(
-      1,
-      expect.stringContaining('审核'),
-    )
   })
 
   it('当内容未被标记时，应该添加收录标签并关闭 issue', async () => {

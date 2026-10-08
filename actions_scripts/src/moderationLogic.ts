@@ -26,6 +26,10 @@ const categoriesTextMap: Record<string, string> = {
   'illicit/violent': '非法/暴力',
 }
 
+// 违规判定阈值（category_scores 0-1）：不用 OpenAI 内部阈值（约 0.5，不可调）。
+// 依据 2026-10-08 #211 消融实测：玩梗「击毙」误判 violence=0.524，露骨暴力 0.9+，取 0.7 分界。
+const VIOLATION_SCORE_THRESHOLD = 0.7
+
 export interface ModerationResult {
   type: 'similar' | 'violation' | 'approved' | 'pending' | 'skipped'
   message?: string
@@ -57,6 +61,7 @@ function extractText(body: string): string {
 async function callModerationApi(inputs: ModerationInput[]): Promise<{
   flagged: boolean
   categories: Record<string, boolean>
+  scores: Record<string, number>
 }> {
   const API_BASE_URL = process.env.AI_API_BASE_URL || 'https://api.openai.com'
   const API_URL = `${API_BASE_URL.replace(/\/$/, '')}/v1/moderations`
@@ -99,20 +104,34 @@ async function callModerationApi(inputs: ModerationInput[]): Promise<{
         throw new Error(data.error.message || 'Moderation API 返回错误')
       }
 
-      // 合并所有结果（文本+图片任一项触发则标记）
+      // 按类别取所有输入（文本+图片）的最高分，超过自定义阈值才算违规
       const results = data.results || []
-      const mergedCategories: Record<string, boolean> = {}
-      let flagged = false
+      const mergedScores: Record<string, number> = {}
 
       for (const result of results) {
-        if (result.flagged) flagged = true
-        for (const [category, value] of Object.entries(result.categories || {})) {
-          if (value) mergedCategories[category] = true
+        for (const [category, score] of Object.entries(result.category_scores || {})) {
+          mergedScores[category] = Math.max(mergedScores[category] ?? 0, score as number)
         }
       }
 
-      console.log('Moderation API 调用成功，flagged:', flagged, 'categories:', mergedCategories)
-      return { flagged, categories: mergedCategories }
+      const flaggedCategories = Object.entries(mergedScores)
+        .filter(([, score]) => score >= VIOLATION_SCORE_THRESHOLD)
+        .map(([category]) => category)
+
+      const topScores = Object.entries(mergedScores)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3)
+        .map(([category, score]) => `${category}=${score.toFixed(3)}`)
+        .join(', ')
+
+      console.log(
+        `Moderation API 调用成功，违规(≥${VIOLATION_SCORE_THRESHOLD}): ${flaggedCategories.length > 0}，最高分: ${topScores}`,
+      )
+      return {
+        flagged: flaggedCategories.length > 0,
+        categories: Object.fromEntries(flaggedCategories.map((category) => [category, true])),
+        scores: mergedScores,
+      }
     } catch (error) {
       clearTimeout(timeout)
       lastError = error as Error
@@ -221,43 +240,31 @@ export async function moderateContent(
       const flaggedCategoriesText = flaggedCategories
         .map((category) => categoriesTextMap[category] || category)
         .filter(Boolean)
+      const flaggedCategoriesDetail = flaggedCategories
+        .map(
+          (category) =>
+            `${categoriesTextMap[category] || category}(${moderationResult.scores[category].toFixed(2)})`,
+        )
+        .join('、')
 
-      console.log(`检测到违规内容: ${flaggedCategoriesText.join('、')}`)
+      console.log(`检测到违规内容: ${flaggedCategoriesDetail}`)
 
-      if (flaggedCategoriesText.length > 0) {
-        if (!dryRun) {
-          await addLabelsToIssue(issueNumber, ['违规'])
-          await addCommentToIssue(
-            issueNumber,
-            `⛔️此内容因包含以下违规类别被标记：${flaggedCategoriesText.join('、')}。不予收录。`,
-          )
-          await closeIssue(issueNumber)
-        } else {
-          console.log(
-            `[试运行] 将标记为违规并关闭: ${flaggedCategoriesText.join('、')}`,
-          )
-        }
-
-        return {
-          type: 'violation',
-          categories: flaggedCategoriesText,
-        }
+      if (!dryRun) {
+        await addLabelsToIssue(issueNumber, ['违规'])
+        await addCommentToIssue(
+          issueNumber,
+          `⛔️此内容因包含以下违规类别被标记：${flaggedCategoriesDetail}。不予收录。`,
+        )
+        await closeIssue(issueNumber)
       } else {
-        // flagged 但没有具体类别，标记待审
-        if (!dryRun) {
-          await addLabelsToIssue(issueNumber, ['待审'])
-          await addCommentToIssue(
-            issueNumber,
-            `⚠️内容可能违规，正等待进一步人工审核确认。`,
-          )
-        } else {
-          console.log('[试运行] 将标记为待审')
-        }
+        console.log(
+          `[试运行] 将标记为违规并关闭: ${flaggedCategoriesDetail}`,
+        )
+      }
 
-        return {
-          type: 'pending',
-          message: '内容可能违规，需要人工审核',
-        }
+      return {
+        type: 'violation',
+        categories: flaggedCategoriesText,
       }
     } else {
       console.log('内容审核通过')

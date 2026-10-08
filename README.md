@@ -57,7 +57,7 @@ vme-app SqlSnapshotProvider (sql.js + 5min TTL)
 | `createData.ts` | 抓 issues + 合并归档 + 打标 + 生成 `data/snapshot.sql` |
 | `generateSnapshotSql.ts` | 把内存 items 数组渲染成稳定排序的 SQL dump |
 | `tagger.ts` | LLM 打标（OpenAI 兼容协议），按 tagHash 缓存命中跳过 LLM |
-| `moderateIssue.ts` / `moderationLogic.ts` | 投稿自动审核（OpenAI Moderation API）+ 查重（基于 snapshot.sql） |
+| `moderateIssue.ts` / `moderationLogic.ts` | 投稿自动审核（OpenAI Moderation API，category_scores ≥ 0.7 自定义阈值判违规）+ 查重（基于 snapshot.sql） |
 | `manualModeration.ts` | 人工复审入口 |
 | `utils/snapshotReader.ts` | 装载 `snapshot.sql`（sql.js），暴露给查重 + tag 缓存读取 |
 | `syncClient.ts` | issue REST payload → 内部映射类型（manualModeration 用） |
